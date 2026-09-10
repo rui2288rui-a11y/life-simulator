@@ -1,249 +1,701 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description"
-    content="一人暮らしや大学生活にいくらかかる？生活費や学費を入力するだけで、毎月の支出、年間貯金額、大学卒業までの総額などを無料で計算できます。">
+  <title>人生の出費・生活判断シミュレーター｜生活・お金・進学・車・旅行をまとめて計算</title>
+  <meta name="description" content="一人暮らし、大学、車、引っ越し、旅行、転職など、生活に関わるお金を無料でシミュレーション。入力した条件から必要な金額や総額をわかりやすく計算できます。">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#315efb">
 
-  <title>人生の出費・生活判断シミュレーター</title>
+  <!-- Google Search Console verification -->
+  <!-- 必要ならここにGoogle Search Consoleの確認タグを入れてください -->
+
+  <!-- Google AdSense
+  審査通過後、AdSenseから発行された正式なコードに置き換えてください。
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXX"
+    crossorigin="anonymous"></script>
+  -->
 
   <style>
+    :root {
+      --primary: #315efb;
+      --primary-dark: #2348d8;
+      --primary-light: #eef3ff;
+      --text: #182033;
+      --muted: #667085;
+      --border: #e5e7eb;
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --success: #087f5b;
+      --success-bg: #e9fbf3;
+      --warning: #a15c00;
+      --warning-bg: #fff7e8;
+      --danger: #c92a2a;
+      --danger-bg: #fff0f0;
+      --shadow: 0 8px 30px rgba(20, 31, 56, .08);
+      --radius: 18px;
+    }
+
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
+      background: var(--bg);
+      color: var(--text);
       font-family:
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
         "Noto Sans JP",
         sans-serif;
-      background: #f4f7fb;
-      color: #222;
       line-height: 1.7;
     }
 
-    header {
-      background: linear-gradient(135deg, #4f7cff, #6b5cff);
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0 0 8px;
-      font-size: 30px;
-    }
-
-    header p {
-      margin: 0;
-      opacity: 0.95;
-    }
-
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 0 16px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 25px;
-      margin-bottom: 25px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
-    }
-
-    h2 {
-      margin-top: 0;
-      font-size: 24px;
-    }
-
-    h3 {
-      margin-top: 25px;
-    }
-
-    .description {
-      color: #666;
-      margin-bottom: 25px;
-    }
-
-    .input-group {
-      margin-bottom: 18px;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 7px;
-    }
-
+    button,
     input,
     select {
-      width: 100%;
-      padding: 13px;
-      font-size: 16px;
-      border: 1px solid #ccd3df;
-      border-radius: 10px;
-      outline: none;
-      background: white;
+      font: inherit;
     }
 
-    input:focus,
-    select:focus {
-      border-color: #4f7cff;
-    }
-
-    .hint-button {
-      margin-top: 7px;
-      padding: 7px 12px;
-      border: none;
-      border-radius: 8px;
-      background: #eef2ff;
-      color: #435bd5;
+    button {
       cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      font-weight: 900;
+      font-size: 16px;
+      color: var(--text);
+      text-align: left;
+    }
+
+    .brand small {
+      display: block;
+      font-weight: 500;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .small-btn {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-weight: 700;
+    }
+
+    .small-btn:hover {
+      background: #f8fafc;
+    }
+
+    .hero {
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,.22), transparent 30%),
+        linear-gradient(135deg, #315efb, #6046e8);
+      color: white;
+      padding: 54px 18px 62px;
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 850px;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.15;
+      letter-spacing: -.03em;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: 18px 0 0;
+      font-size: 17px;
+      opacity: .94;
+    }
+
+    .hero-note {
+      display: inline-flex;
+      margin-top: 22px;
+      padding: 8px 13px;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 999px;
+      background: rgba(255,255,255,.1);
       font-size: 13px;
     }
 
-    .hint-button:hover {
-      background: #e2e8ff;
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 70px;
     }
 
-    .calculate-button {
-      width: 100%;
-      padding: 16px;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #4f7cff, #6b5cff);
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .calculate-button:hover {
-      opacity: 0.9;
-    }
-
-    .results {
+    .page {
       display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .section-title {
+      margin: 0 0 8px;
+      font-size: clamp(24px, 4vw, 34px);
+      line-height: 1.25;
+    }
+
+    .section-lead {
+      color: var(--muted);
+      margin: 0 0 24px;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .tool-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: white;
+      padding: 22px;
+      text-align: left;
+      box-shadow: 0 4px 18px rgba(20,31,56,.04);
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      min-height: 190px;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+      border-color: #cbd5ff;
+    }
+
+    .tool-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .tool-card h3 {
+      margin: 0 0 6px;
+      font-size: 19px;
+    }
+
+    .tool-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tool-card .go {
+      margin-top: 14px;
+      display: inline-block;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px;
+      margin-bottom: 22px;
+    }
+
+    .back-row {
+      margin-bottom: 14px;
+    }
+
+    .back-btn {
+      border: 0;
+      background: transparent;
+      color: var(--primary);
+      font-weight: 800;
+      padding: 4px 0;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 18px;
+    }
+
+    .form-grid.three {
+      grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+
+    .field {
+      margin-bottom: 3px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      border: 1px solid #cfd6e4;
+      border-radius: 11px;
+      padding: 12px 13px;
+      background: white;
+      color: var(--text);
+      outline: none;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(49,94,251,.1);
+    }
+
+    .help {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .preset-row {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 7px;
+    }
+
+    .preset {
+      border: 0;
+      border-radius: 8px;
+      padding: 6px 10px;
+      background: var(--primary-light);
+      color: #2c4ed0;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .primary-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 15px 18px;
+      background: linear-gradient(135deg, var(--primary), #6046e8);
+      color: white;
+      font-weight: 900;
+      font-size: 17px;
+      margin-top: 18px;
+      box-shadow: 0 8px 20px rgba(49,94,251,.2);
+    }
+
+    .primary-btn:hover {
+      filter: brightness(.97);
+    }
+
+    .secondary-btn {
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 11px 15px;
+      background: white;
+      font-weight: 800;
+    }
+
+    .result {
+      display: none;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .big-result {
+      text-align: center;
+      background: var(--primary-light);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 18px;
+    }
+
+    .big-result .label {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .big-result .number {
+      font-size: clamp(30px, 6vw, 46px);
+      line-height: 1.2;
+      font-weight: 950;
+      margin-top: 4px;
     }
 
     .result-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 13px;
     }
 
     .result-box {
-      background: #f7f9fd;
-      border-radius: 14px;
-      padding: 18px;
+      background: #f8fafc;
+      border-radius: 13px;
+      padding: 17px;
       text-align: center;
+      border: 1px solid #edf0f5;
     }
 
-    .result-title {
-      color: #666;
+    .result-box .label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .result-box .number {
+      font-size: 22px;
+      font-weight: 900;
+      margin-top: 3px;
+    }
+
+    .judgement {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 12px;
+      font-weight: 800;
+      background: #f7f8fa;
+    }
+
+    .judgement.success {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .judgement.warning {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    .judgement.danger {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+
+    .info-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 16px;
+      color: #475467;
+      font-size: 13px;
+      margin-top: 18px;
+    }
+
+    .ad-slot {
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      background: rgba(255,255,255,.55);
+      margin: 20px 0;
+      font-size: 12px;
+    }
+
+    .ad-slot.ready {
+      display: none;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .summary-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .summary-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid #edf0f5;
+      padding: 9px 0;
+    }
+
+    .summary-list li:last-child {
+      border-bottom: 0;
+    }
+
+    .summary-list strong {
+      font-weight: 900;
+    }
+
+    .compare {
+      overflow-x: auto;
+    }
+
+    .compare table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+    }
+
+    .compare th,
+    .compare td {
+      border-bottom: 1px solid var(--border);
+      padding: 11px;
+      text-align: right;
+    }
+
+    .compare th:first-child,
+    .compare td:first-child {
+      text-align: left;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-q {
+      width: 100%;
+      border: 0;
+      background: white;
+      text-align: left;
+      padding: 17px 0;
+      font-weight: 900;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .faq-a {
+      display: none;
+      padding: 0 0 17px;
+      color: var(--muted);
       font-size: 14px;
-      margin-bottom: 5px;
     }
 
-    .result-value {
-      font-size: 24px;
-      font-weight: bold;
+    .faq-item.open .faq-a {
+      display: block;
     }
 
-    .highlight {
-      background: #eef3ff;
+    .footer {
+      border-top: 1px solid var(--border);
+      background: white;
+      padding: 34px 18px;
     }
 
-    .judgment {
-      margin-top: 20px;
-      padding: 18px;
-      border-radius: 12px;
-      background: #f5f7fa;
-      font-weight: bold;
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
     }
 
-    .reverse-box {
-      margin-top: 25px;
-      padding-top: 25px;
-      border-top: 1px solid #e1e5eb;
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
     }
 
-    .reverse-result {
-      margin-top: 15px;
-      padding: 18px;
-      background: #f0fff5;
-      border-radius: 12px;
-    }
-
-    .reverse-number {
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .university-result {
-      display: none;
-    }
-
-    .university-total {
-      background: #eef3ff;
-      border-radius: 15px;
-      padding: 25px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .university-total-title {
-      color: #555;
-      font-size: 15px;
-    }
-
-    .university-total-number {
-      font-size: 34px;
-      font-weight: bold;
-      margin-top: 5px;
-    }
-
-    .note {
-      color: #777;
-      font-size: 13px;
-      margin-top: 12px;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    footer {
-      text-align: center;
-      color: #888;
-      padding: 30px 15px;
+    .footer button {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: var(--muted);
       font-size: 13px;
     }
 
-    @media (max-width: 600px) {
+    .footer small {
+      color: var(--muted);
+    }
 
-      header h1 {
-        font-size: 24px;
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(15,23,42,.6);
+      padding: 20px;
+      overflow: auto;
+    }
+
+    .modal.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-card {
+      max-width: 800px;
+      width: 100%;
+      background: white;
+      border-radius: 18px;
+      padding: 28px;
+      max-height: 88vh;
+      overflow: auto;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .modal-head h2 {
+      margin: 0;
+    }
+
+    .close-btn {
+      border: 0;
+      background: #f1f3f5;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-weight: 900;
+    }
+
+    .notice {
+      padding: 14px 16px;
+      background: #f8fafc;
+      border-radius: 12px;
+      margin: 14px 0;
+      color: #475467;
+      font-size: 13px;
+    }
+
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 10px;
+      margin: 22px 0;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 14px;
+    }
+
+    .stat b {
+      display: block;
+      font-size: 21px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .danger-text {
+      color: var(--danger);
+    }
+
+    @media (max-width: 900px) {
+      .tool-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+
+      .form-grid.three {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stat-strip {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .hero {
+        padding: 40px 16px 48px;
+      }
+
+      main {
+        padding-left: 12px;
+        padding-right: 12px;
       }
 
       .card {
         padding: 20px;
       }
 
+      .tool-grid,
+      .form-grid,
+      .form-grid.three,
+      .two-col,
       .result-grid {
         grid-template-columns: 1fr;
       }
 
-      .university-total-number {
-        font-size: 28px;
+      .field.full {
+        grid-column: auto;
+      }
+
+      .result-box .number {
+        font-size: 21px;
+      }
+
+      .topbar-inner {
+        align-items: flex-start;
+      }
+
+      .top-actions .small-btn:nth-child(2) {
+        display: none;
       }
     }
   </style>
@@ -251,925 +703,1150 @@
 
 <body>
 
-<header>
-  <h1>人生の出費・生活判断シミュレーター</h1>
-  <p>「これ、結局いくらかかる？」を簡単に計算</p>
-</header>
-
-<main>
-
-  <!-- ============================= -->
-  <!-- 一人暮らし -->
-  <!-- ============================= -->
-
-  <section class="card">
-
-    <h2>🏠 一人暮らし費用シミュレーター</h2>
-
-    <p class="description">
-      手取りと毎月の生活費を入力すると、
-      月の支出・残るお金・年間貯金額・家賃負担率などを計算できます。
-    </p>
-
-    <div class="input-group">
-      <label for="income">💰 月の手取り</label>
-      <input id="income" type="number" value="250000" min="0">
-    </div>
-
-    <div class="input-group">
-      <label for="rent">🏠 家賃</label>
-      <input id="rent" type="number" value="70000" min="0">
-    </div>
-
-    <div class="input-group">
-      <label for="food">🍚 食費</label>
-      <input id="food" type="number" value="40000" min="0">
-      <button class="hint-button" onclick="setValue('food', 40000)">
-        目安を入れる
+  <nav class="topbar">
+    <div class="topbar-inner">
+      <button class="brand" onclick="showPage('home')">
+        人生の出費・生活判断シミュレーター
+        <small>生活のお金を、数字で確認。</small>
       </button>
-    </div>
 
-    <div class="input-group">
-      <label for="utility">💡 水道・光熱費</label>
-      <input id="utility" type="number" value="15000" min="0">
-      <button class="hint-button" onclick="setValue('utility', 15000)">
-        目安を入れる
-      </button>
-    </div>
-
-    <div class="input-group">
-      <label for="internet">📱 通信費</label>
-      <input id="internet" type="number" value="10000" min="0">
-      <button class="hint-button" onclick="setValue('internet', 10000)">
-        目安を入れる
-      </button>
-    </div>
-
-    <div class="input-group">
-      <label for="transport">🚃 交通費</label>
-      <input id="transport" type="number" value="10000" min="0">
-      <button class="hint-button" onclick="setValue('transport', 10000)">
-        目安を入れる
-      </button>
-    </div>
-
-    <div class="input-group">
-      <label for="insurance">🛡️ 保険・その他固定費</label>
-      <input id="insurance" type="number" value="5000" min="0">
-      <button class="hint-button" onclick="setValue('insurance', 5000)">
-        目安を入れる
-      </button>
-    </div>
-
-    <div class="input-group">
-      <label for="entertainment">🎮 娯楽・交際費</label>
-      <input id="entertainment" type="number" value="30000" min="0">
-      <button class="hint-button" onclick="setValue('entertainment', 30000)">
-        目安を入れる
-      </button>
-    </div>
-
-    <div class="input-group">
-      <label for="other">📦 その他</label>
-      <input id="other" type="number" value="20000" min="0">
-      <button class="hint-button" onclick="setValue('other', 20000)">
-        目安を入れる
-      </button>
-    </div>
-
-    <button class="calculate-button" onclick="calculate()">
-      💰 シミュレーションする
-    </button>
-
-  </section>
-
-
-  <!-- ============================= -->
-  <!-- 一人暮らし結果 -->
-  <!-- ============================= -->
-
-  <section class="card results" id="results">
-
-    <h2>📊 一人暮らしシミュレーション結果</h2>
-
-    <div class="result-grid">
-
-      <div class="result-box highlight">
-        <div class="result-title">月の支出</div>
-        <div class="result-value" id="monthlyExpense">0円</div>
+      <div class="top-actions">
+        <button class="small-btn" onclick="showPage('home')">計算一覧</button>
+        <button class="small-btn" onclick="showPage('faq')">よくある質問</button>
       </div>
-
-      <div class="result-box">
-        <div class="result-title">月に残るお金</div>
-        <div class="result-value" id="monthlyRemaining">0円</div>
-      </div>
-
-      <div class="result-box">
-        <div class="result-title">年間支出</div>
-        <div class="result-value" id="yearlyExpense">0円</div>
-      </div>
-
-      <div class="result-box highlight">
-        <div class="result-title">年間で貯められる金額</div>
-        <div class="result-value" id="yearlySaving">0円</div>
-      </div>
-
-      <div class="result-box">
-        <div class="result-title">家賃負担率</div>
-        <div class="result-value" id="rentRate">0%</div>
-      </div>
-
-      <div class="result-box">
-        <div class="result-title">貯蓄率</div>
-        <div class="result-value" id="savingRate">0%</div>
-      </div>
-
     </div>
+  </nav>
 
-    <div class="judgment" id="judgment"></div>
-
-
-    <!-- 必要手取り逆算 -->
-
-    <div class="reverse-box">
-
-      <h3>🔄 この生活には手取りいくら必要？</h3>
-
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>「これ、結局いくらかかる？」を<br>まとめて計算。</h1>
       <p>
-        現在入力している生活費をもとに、
-        毎月いくらの手取りがあれば生活できるかを逆算します。
+        一人暮らし、大学、車、引っ越し、旅行、給料、転職。
+        生活で気になる金額を、自分の条件に合わせてシミュレーションできます。
       </p>
-
-      <div class="input-group">
-        <label for="targetSaving">
-          🏦 毎月貯金したい金額
-        </label>
-
-        <input
-          id="targetSaving"
-          type="number"
-          value="30000"
-          min="0"
-        >
-      </div>
-
-      <button class="calculate-button" onclick="reverseCalculate()">
-        🔄 必要な手取りを計算
-      </button>
-
-      <div class="reverse-result" id="reverseResult">
-        ここに必要な手取り額が表示されます。
-      </div>
-
+      <span class="hero-note">入力 → 計算 → 結果。登録不要で使えます。</span>
     </div>
-
   </section>
 
+  <main>
 
-  <!-- ============================= -->
-  <!-- 大学費用 -->
-  <!-- ============================= -->
+    <!-- HOME -->
+    <section id="page-home" class="page active">
 
-  <section class="card">
-
-    <h2>🎓 大学費用シミュレーター</h2>
-
-    <p class="description">
-      大学の在学年数、学校区分、入学時費用、年間学費、
-      生活費などを入力して、卒業までに必要なお金を計算します。
-    </p>
-
-
-    <div class="input-group">
-
-      <label for="universityYears">
-        📅 在学年数
-      </label>
-
-      <select id="universityYears" onchange="changeUniversityYears()">
-        <option value="2">2年制</option>
-        <option value="4" selected>4年制</option>
-        <option value="6">6年制</option>
-        <option value="custom">その他</option>
-      </select>
-
-    </div>
-
-
-    <div class="input-group hidden" id="customYearsBox">
-
-      <label for="customYears">
-        ✏️ 在学年数を入力
-      </label>
-
-      <input
-        id="customYears"
-        type="number"
-        value="3"
-        min="1"
-        max="20"
-      >
-
-    </div>
-
-
-    <div class="input-group">
-
-      <label for="schoolType">
-        🏫 学校区分
-      </label>
-
-      <select id="schoolType" onchange="setUniversityPreset()">
-        <option value="national">国立</option>
-        <option value="public">公立</option>
-        <option value="private" selected>私立</option>
-      </select>
-
-    </div>
-
-
-    <div class="input-group">
-
-      <label for="livingType">
-        🏠 生活スタイル
-      </label>
-
-      <select id="livingType">
-        <option value="home" selected>実家暮らし</option>
-        <option value="alone">一人暮らし</option>
-      </select>
-
-    </div>
-
-
-    <div class="input-group">
-
-      <label for="entranceFee">
-        💴 入学時費用
-      </label>
-
-      <input
-        id="entranceFee"
-        type="number"
-        value="300000"
-        min="0"
-      >
-
-    </div>
-
-
-    <div class="input-group">
-
-      <label for="annualTuition">
-        💰 年間学費
-      </label>
-
-      <input
-        id="annualTuition"
-        type="number"
-        value="1000000"
-        min="0"
-      >
-
-    </div>
-
-
-    <div class="input-group">
-
-      <label for="annualLiving">
-        🍚 年間生活費
-      </label>
-
-      <input
-        id="annualLiving"
-        type="number"
-        value="600000"
-        min="0"
-      >
-
-      <button
-        class="hint-button"
-        onclick="setLivingPreset()"
-      >
-        生活費の目安を入れる
-      </button>
-
-    </div>
-
-
-    <div class="input-group">
-
-      <label for="annualOther">
-        📦 年間その他費用
-      </label>
-
-      <input
-        id="annualOther"
-        type="number"
-        value="100000"
-        min="0"
-      >
-
-    </div>
-
-
-    <button
-      class="calculate-button"
-      onclick="calculateUniversity()"
-    >
-      🎓 大学費用を計算
-    </button>
-
-  </section>
-
-
-  <!-- ============================= -->
-  <!-- 大学結果 -->
-  <!-- ============================= -->
-
-  <section
-    class="card university-result"
-    id="universityResult"
-  >
-
-    <h2>🎓 大学費用シミュレーション結果</h2>
-
-    <div class="university-total">
-
-      <div class="university-total-title">
-        卒業までに必要な総額
+      <div class="stat-strip">
+        <div class="stat"><span class="muted">住宅</span><b>🏠</b><small>一人暮らし・引っ越し</small></div>
+        <div class="stat"><span class="muted">進学</span><b>🎓</b><small>大学・学生生活</small></div>
+        <div class="stat"><span class="muted">移動</span><b>🚗</b><small>車・旅行</small></div>
+        <div class="stat"><span class="muted">仕事</span><b>💼</b><small>手取り・転職</small></div>
       </div>
 
-      <div
-        class="university-total-number"
-        id="universityTotal"
-      >
-        0円
+      <h2 class="section-title">計算したいものを選ぶ</h2>
+      <p class="section-lead">ボタンを押すだけで、その計算画面に移動できます。</p>
+
+      <div class="tool-grid">
+
+        <button class="tool-card" onclick="showPage('living')">
+          <div class="tool-icon">🏠</div>
+          <h3>一人暮らし費用</h3>
+          <p>手取り・家賃・食費などから、月の支出と年間貯金額を計算。</p>
+          <span class="go">計算する →</span>
+        </button>
+
+        <button class="tool-card" onclick="showPage('university')">
+          <div class="tool-icon">🎓</div>
+          <h3>大学費用</h3>
+          <p>2年・4年・6年・任意年数に対応。学費＋生活費の総額を計算。</p>
+          <span class="go">計算する →</span>
+        </button>
+
+        <button class="tool-card" onclick="showPage('car')">
+          <div class="tool-icon">🚗</div>
+          <h3>車の維持費</h3>
+          <p>購入・ローン・保険・燃料・税金・車検などをまとめて計算。</p>
+          <span class="go">計算する →</span>
+        </button>
+
+        <button class="tool-card" onclick="showPage('moving')">
+          <div class="tool-icon">📦</div>
+          <h3>引っ越し費用</h3>
+          <p>敷金・礼金・仲介料・引っ越し業者・家具家電などを計算。</p>
+          <span class="go">計算する →</span>
+        </button>
+
+        <button class="tool-card" onclick="showPage('salary')">
+          <div class="tool-icon">💴</div>
+          <h3>手取り・年収</h3>
+          <p>額面月収・賞与から年収を計算し、手取りの目安を確認。</p>
+          <span class="go">計算する →</span>
+        </button>
+
+        <button class="tool-card" onclick="showPage('travel')">
+          <div class="tool-icon">✈️</div>
+          <h3>旅行費用</h3>
+          <p>交通・宿泊・食費・観光・買い物などから旅行総額を計算。</p>
+          <span class="go">計算する →</span>
+        </button>
+
+        <button class="tool-card" onclick="showPage('jobchange')">
+          <div class="tool-icon">💼</div>
+          <h3>転職前後の収支</h3>
+          <p>現在と転職後の年収・家賃・通勤費などを比較。</p>
+          <span class="go">比較する →</span>
+        </button>
+
+        <button class="tool-card" onclick="showPage('savings')">
+          <div class="tool-icon">🏦</div>
+          <h3>貯金計画</h3>
+          <p>目標額と毎月の貯金額から、何か月かかるかを計算。</p>
+          <span class="go">計算する →</span>
+        </button>
+
+        <button class="tool-card" onclick="showPage('loan')">
+          <div class="tool-icon">🧮</div>
+          <h3>ローン返済</h3>
+          <p>借入額・金利・期間から毎月返済額と総返済額を計算。</p>
+          <span class="go">計算する →</span>
+        </button>
+
       </div>
 
-    </div>
+      <div class="ad-slot">広告掲載スペース（審査・設定後に広告コードを設置）</div>
 
-
-    <div class="result-grid">
-
-      <div class="result-box">
-        <div class="result-title">
-          在学年数
-        </div>
-
-        <div
-          class="result-value"
-          id="resultYears"
-        >
-          0年
+      <div class="card">
+        <h2>このサイトでできること</h2>
+        <p>
+          「毎月いくら必要？」「卒業までにいくら？」「車を持ったら年間いくら？」
+          のような、生活の具体的な疑問を数字に変えるための計算ツールです。
+        </p>
+        <div class="two-col">
+          <div>
+            <h3>🔢 自分の条件で計算</h3>
+            <p class="muted">家賃や学費などを自由に変更できます。</p>
+          </div>
+          <div>
+            <h3>📊 結果を比較</h3>
+            <p class="muted">月・年・卒業までなど、目的に合わせて表示します。</p>
+          </div>
         </div>
       </div>
 
+    </section>
 
-      <div class="result-box">
-        <div class="result-title">
-          年間平均
+
+    <!-- LIVING -->
+    <section id="page-living" class="page">
+      <div class="back-row"><button class="back-btn" onclick="showPage('home')">← 計算一覧に戻る</button></div>
+
+      <div class="card">
+        <h2>🏠 一人暮らし費用シミュレーター</h2>
+        <p class="section-lead">毎月の生活費を入力して、残るお金・年間貯金額・家賃負担率を確認します。</p>
+
+        <div class="form-grid">
+          <div class="field"><label>月の手取り</label><input id="li-income" type="number" value="250000" min="0"></div>
+          <div class="field"><label>家賃</label><input id="li-rent" type="number" value="70000" min="0"></div>
+          <div class="field"><label>食費</label><input id="li-food" type="number" value="40000" min="0"><div class="preset-row"><button class="preset" onclick="setv('li-food',40000)">目安 4万円</button></div></div>
+          <div class="field"><label>水道・光熱費</label><input id="li-utility" type="number" value="15000" min="0"><div class="preset-row"><button class="preset" onclick="setv('li-utility',15000)">目安 1.5万円</button></div></div>
+          <div class="field"><label>通信費</label><input id="li-internet" type="number" value="10000" min="0"><div class="preset-row"><button class="preset" onclick="setv('li-internet',10000)">目安 1万円</button></div></div>
+          <div class="field"><label>交通費</label><input id="li-transport" type="number" value="10000" min="0"><div class="preset-row"><button class="preset" onclick="setv('li-transport',10000)">目安 1万円</button></div></div>
+          <div class="field"><label>保険・固定費</label><input id="li-insurance" type="number" value="5000" min="0"></div>
+          <div class="field"><label>娯楽・交際費</label><input id="li-entertainment" type="number" value="30000" min="0"></div>
+          <div class="field"><label>その他</label><input id="li-other" type="number" value="20000" min="0"></div>
         </div>
 
-        <div
-          class="result-value"
-          id="universityAnnualAverage"
-        >
-          0円
-        </div>
+        <button class="primary-btn" onclick="calcLiving()">💰 シミュレーションする</button>
       </div>
 
-
-      <div class="result-box">
-        <div class="result-title">
-          月額平均
+      <div class="card result" id="li-result">
+        <h2>📊 結果</h2>
+        <div class="result-grid">
+          <div class="result-box"><div class="label">月の支出</div><div class="number" id="li-expense"></div></div>
+          <div class="result-box"><div class="label">月に残るお金</div><div class="number" id="li-remain"></div></div>
+          <div class="result-box"><div class="label">年間支出</div><div class="number" id="li-year-expense"></div></div>
+          <div class="result-box"><div class="label">年間貯金額</div><div class="number" id="li-year-save"></div></div>
+          <div class="result-box"><div class="label">家賃負担率</div><div class="number" id="li-rent-rate"></div></div>
+          <div class="result-box"><div class="label">貯蓄率</div><div class="number" id="li-save-rate"></div></div>
         </div>
+        <div class="judgement" id="li-judgement"></div>
 
-        <div
-          class="result-value"
-          id="universityMonthlyAverage"
-        >
-          0円
-        </div>
-      </div>
-
-
-      <div class="result-box">
-        <div class="result-title">
-          学費総額
-        </div>
-
-        <div
-          class="result-value"
-          id="universityTuitionTotal"
-        >
-          0円
+        <div class="card" style="margin-top:20px;margin-bottom:0;background:#fafbff;">
+          <h3>🔄 必要な手取りを逆算</h3>
+          <p class="muted">今の生活費に加えて、毎月いくら貯金したいかを入力してください。</p>
+          <div class="form-grid">
+            <div class="field"><label>毎月貯金したい金額</label><input id="li-target-save" type="number" value="30000" min="0"></div>
+          </div>
+          <button class="primary-btn" onclick="reverseLiving()">必要な手取りを計算</button>
+          <div class="reverse-result" id="li-reverse" style="margin-top:16px;"></div>
         </div>
       </div>
+    </section>
 
 
-      <div class="result-box">
-        <div class="result-title">
-          生活費総額
+    <!-- UNIVERSITY -->
+    <section id="page-university" class="page">
+      <div class="back-row"><button class="back-btn" onclick="showPage('home')">← 計算一覧に戻る</button></div>
+
+      <div class="card">
+        <h2>🎓 大学費用シミュレーター</h2>
+        <p class="section-lead">2年・4年・6年・任意年数に対応。学校区分と生活スタイルも選べます。</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label>在学年数</label>
+            <select id="un-years" onchange="toggleCustomYears()">
+              <option value="2">2年制</option>
+              <option value="4" selected>4年制</option>
+              <option value="6">6年制</option>
+              <option value="custom">その他</option>
+            </select>
+          </div>
+
+          <div class="field" id="un-custom-wrap" style="display:none;">
+            <label>任意の在学年数</label>
+            <input id="un-custom-years" type="number" value="3" min="1" max="20">
+          </div>
+
+          <div class="field">
+            <label>学校区分</label>
+            <select id="un-type" onchange="universityPreset()">
+              <option value="national">国立</option>
+              <option value="public">公立</option>
+              <option value="private" selected>私立</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>生活スタイル</label>
+            <select id="un-living" onchange="livingPreset()">
+              <option value="home" selected>実家暮らし</option>
+              <option value="alone">一人暮らし</option>
+            </select>
+          </div>
+
+          <div class="field"><label>入学時費用</label><input id="un-entrance" type="number" value="300000" min="0"></div>
+          <div class="field"><label>年間学費</label><input id="un-tuition" type="number" value="1000000" min="0"></div>
+          <div class="field"><label>年間生活費</label><input id="un-living-cost" type="number" value="600000" min="0"></div>
+          <div class="field"><label>年間その他費用</label><input id="un-other" type="number" value="100000" min="0"></div>
         </div>
 
-        <div
-          class="result-value"
-          id="universityLivingTotal"
-        >
-          0円
-        </div>
+        <div class="notice">金額は大学・学部・地域・住居などで大きく変わります。下の金額は入力例として設定されています。</div>
+
+        <button class="primary-btn" onclick="calcUniversity()">🎓 大学費用を計算</button>
       </div>
 
+      <div class="card result" id="un-result">
+        <h2>📊 大学費用の結果</h2>
+        <div class="big-result">
+          <div class="label">卒業までに必要な総額</div>
+          <div class="number" id="un-total"></div>
+        </div>
+        <div class="result-grid">
+          <div class="result-box"><div class="label">在学年数</div><div class="number" id="un-years-out"></div></div>
+          <div class="result-box"><div class="label">年間平均</div><div class="number" id="un-annual"></div></div>
+          <div class="result-box"><div class="label">月額平均</div><div class="number" id="un-monthly"></div></div>
+          <div class="result-box"><div class="label">学費・入学時費用</div><div class="number" id="un-tuition-total"></div></div>
+          <div class="result-box"><div class="label">生活費総額</div><div class="number" id="un-living-total"></div></div>
+          <div class="result-box"><div class="label">その他費用</div><div class="number" id="un-other-total"></div></div>
+        </div>
+        <div class="judgement success" id="un-judgement"></div>
+      </div>
+    </section>
 
-      <div class="result-box">
-        <div class="result-title">
-          その他費用総額
+
+    <!-- CAR -->
+    <section id="page-car" class="page">
+      <div class="back-row"><button class="back-btn" onclick="showPage('home')">← 計算一覧に戻る</button></div>
+
+      <div class="card">
+        <h2>🚗 車の維持費シミュレーター</h2>
+        <p class="section-lead">車両価格だけでなく、ローン・保険・燃料・税金・車検・駐車場まで年間で計算します。</p>
+
+        <div class="form-grid">
+          <div class="field"><label>車両価格</label><input id="car-price" type="number" value="2000000" min="0"></div>
+          <div class="field"><label>頭金</label><input id="car-down" type="number" value="500000" min="0"></div>
+          <div class="field"><label>ローン金利（年%）</label><input id="car-rate" type="number" value="3" min="0" step="0.1"></div>
+          <div class="field"><label>ローン期間（月）</label><input id="car-term" type="number" value="60" min="1"></div>
+          <div class="field"><label>任意保険（年間）</label><input id="car-insurance" type="number" value="80000" min="0"></div>
+          <div class="field"><label>自動車税など（年間）</label><input id="car-tax" type="number" value="35000" min="0"></div>
+          <div class="field"><label>車検・整備（年間平均）</label><input id="car-inspection" type="number" value="60000" min="0"></div>
+          <div class="field"><label>駐車場（月）</label><input id="car-parking" type="number" value="10000" min="0"></div>
+          <div class="field"><label>ガソリン（月）</label><input id="car-gas" type="number" value="10000" min="0"></div>
+          <div class="field"><label>その他維持費（年間）</label><input id="car-other" type="number" value="30000" min="0"></div>
         </div>
 
-        <div
-          class="result-value"
-          id="universityOtherTotal"
-        >
-          0円
-        </div>
+        <button class="primary-btn" onclick="calcCar()">🚗 車の費用を計算</button>
       </div>
 
+      <div class="card result" id="car-result">
+        <h2>📊 車の費用</h2>
+        <div class="result-grid">
+          <div class="result-box"><div class="label">ローン月額</div><div class="number" id="car-loan-month"></div></div>
+          <div class="result-box"><div class="label">年間維持費</div><div class="number" id="car-annual"></div></div>
+          <div class="result-box"><div class="label">年間総負担</div><div class="number" id="car-total-annual"></div></div>
+          <div class="result-box"><div class="label">月平均負担</div><div class="number" id="car-month"></div></div>
+          <div class="result-box"><div class="label">5年間のローン返済総額</div><div class="number" id="car-loan-total"></div></div>
+          <div class="result-box"><div class="label">5年間の維持費</div><div class="number" id="car-five-maint"></div></div>
+        </div>
+        <div class="info-box" id="car-note"></div>
+      </div>
+    </section>
+
+
+    <!-- MOVING -->
+    <section id="page-moving" class="page">
+      <div class="back-row"><button class="back-btn" onclick="showPage('home')">← 計算一覧に戻る</button></div>
+
+      <div class="card">
+        <h2>📦 引っ越し費用シミュレーター</h2>
+        <p class="section-lead">新居契約にかかる費用と、引っ越し・家具家電などの初期費用をまとめます。</p>
+
+        <div class="form-grid">
+          <div class="field"><label>家賃</label><input id="mv-rent" type="number" value="70000" min="0"></div>
+          <div class="field"><label>共益費</label><input id="mv-fee" type="number" value="5000" min="0"></div>
+          <div class="field"><label>敷金（家賃何か月分）</label><input id="mv-deposit-month" type="number" value="1" min="0" step="0.5"></div>
+          <div class="field"><label>礼金（家賃何か月分）</label><input id="mv-key-month" type="number" value="1" min="0" step="0.5"></div>
+          <div class="field"><label>仲介手数料（家賃何か月分）</label><input id="mv-agent-month" type="number" value="1" min="0" step="0.5"></div>
+          <div class="field"><label>保証会社・契約関連費用</label><input id="mv-contract" type="number" value="50000" min="0"></div>
+          <div class="field"><label>引っ越し業者</label><input id="mv-moving" type="number" value="60000" min="0"></div>
+          <div class="field"><label>家具・家電</label><input id="mv-furniture" type="number" value="200000" min="0"></div>
+          <div class="field"><label>その他初期費用</label><input id="mv-other" type="number" value="50000" min="0"></div>
+        </div>
+
+        <button class="primary-btn" onclick="calcMoving()">📦 引っ越し費用を計算</button>
+      </div>
+
+      <div class="card result" id="mv-result">
+        <h2>📊 引っ越し費用</h2>
+        <div class="big-result">
+          <div class="label">引っ越しに必要な初期費用の合計</div>
+          <div class="number" id="mv-total"></div>
+        </div>
+        <div class="result-grid">
+          <div class="result-box"><div class="label">敷金</div><div class="number" id="mv-deposit"></div></div>
+          <div class="result-box"><div class="label">礼金</div><div class="number" id="mv-key"></div></div>
+          <div class="result-box"><div class="label">仲介手数料</div><div class="number" id="mv-agent"></div></div>
+          <div class="result-box"><div class="label">契約関連</div><div class="number" id="mv-contract-out"></div></div>
+          <div class="result-box"><div class="label">引っ越し</div><div class="number" id="mv-moving-out"></div></div>
+          <div class="result-box"><div class="label">家具・家電</div><div class="number" id="mv-furniture-out"></div></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SALARY -->
+    <section id="page-salary" class="page">
+      <div class="back-row"><button class="back-btn" onclick="showPage('home')">← 計算一覧に戻る</button></div>
+
+      <div class="card">
+        <h2>💴 年収・手取りシミュレーター</h2>
+        <p class="section-lead">額面から年収を計算し、手取りの概算を確認します。税・社会保険は条件で変わるため目安として利用してください。</p>
+
+        <div class="form-grid">
+          <div class="field"><label>額面月収</label><input id="sa-month" type="number" value="300000" min="0"></div>
+          <div class="field"><label>年間賞与</label><input id="sa-bonus" type="number" value="600000" min="0"></div>
+          <div class="field"><label>手取り率（目安）</label><input id="sa-rate" type="number" value="78" min="0" max="100" step="0.1"></div>
+          <div class="field"><label>毎月の固定支出</label><input id="sa-expense" type="number" value="180000" min="0"></div>
+        </div>
+
+        <button class="primary-btn" onclick="calcSalary()">💴 年収・手取りを計算</button>
+      </div>
+
+      <div class="card result" id="sa-result">
+        <h2>📊 年収・手取り</h2>
+        <div class="result-grid">
+          <div class="result-box"><div class="label">額面年収</div><div class="number" id="sa-annual"></div></div>
+          <div class="result-box"><div class="label">年間手取り目安</div><div class="number" id="sa-takeannual"></div></div>
+          <div class="result-box"><div class="label">月の手取り目安</div><div class="number" id="sa-takemonth"></div></div>
+          <div class="result-box"><div class="label">月の固定支出</div><div class="number" id="sa-expense-out"></div></div>
+          <div class="result-box"><div class="label">月に残る金額</div><div class="number" id="sa-remain"></div></div>
+          <div class="result-box"><div class="label">年間で残る金額</div><div class="number" id="sa-year-remain"></div></div>
+        </div>
+        <div class="info-box">実際の手取りは所得税、住民税、社会保険、扶養、年齢、勤務先などで変わります。ここでは入力した手取り率を使った概算です。</div>
+      </div>
+    </section>
+
+
+    <!-- TRAVEL -->
+    <section id="page-travel" class="page">
+      <div class="back-row"><button class="back-btn" onclick="showPage('home')">← 計算一覧に戻る</button></div>
+
+      <div class="card">
+        <h2>✈️ 旅行費用シミュレーター</h2>
+        <p class="section-lead">人数と泊数を入れて、交通・宿泊・食事・観光・買い物などの総額を計算します。</p>
+
+        <div class="form-grid">
+          <div class="field"><label>人数</label><input id="tr-people" type="number" value="2" min="1"></div>
+          <div class="field"><label>泊数</label><input id="tr-nights" type="number" value="2" min="0"></div>
+          <div class="field"><label>1人あたり交通費</label><input id="tr-transport" type="number" value="30000" min="0"></div>
+          <div class="field"><label>1人1泊あたり宿泊費</label><input id="tr-hotel" type="number" value="10000" min="0"></div>
+          <div class="field"><label>1人1日あたり食費</label><input id="tr-food" type="number" value="5000" min="0"></div>
+          <div class="field"><label>1人あたり観光費</label><input id="tr-sight" type="number" value="10000" min="0"></div>
+          <div class="field"><label>1人あたり買い物</label><input id="tr-shopping" type="number" value="10000" min="0"></div>
+          <div class="field"><label>その他費用</label><input id="tr-other" type="number" value="10000" min="0"></div>
+        </div>
+
+        <button class="primary-btn" onclick="calcTravel()">✈️ 旅行費用を計算</button>
+      </div>
+
+      <div class="card result" id="tr-result">
+        <h2>📊 旅行費用</h2>
+        <div class="big-result">
+          <div class="label">旅行総額</div>
+          <div class="number" id="tr-total"></div>
+        </div>
+        <div class="result-grid">
+          <div class="result-box"><div class="label">1人あたり</div><div class="number" id="tr-per"></div></div>
+          <div class="result-box"><div class="label">交通費</div><div class="number" id="tr-transport-out"></div></div>
+          <div class="result-box"><div class="label">宿泊費</div><div class="number" id="tr-hotel-out"></div></div>
+          <div class="result-box"><div class="label">食費</div><div class="number" id="tr-food-out"></div></div>
+          <div class="result-box"><div class="label">観光費</div><div class="number" id="tr-sight-out"></div></div>
+          <div class="result-box"><div class="label">買い物・その他</div><div class="number" id="tr-other-out"></div></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- JOB CHANGE -->
+    <section id="page-jobchange" class="page">
+      <div class="back-row"><button class="back-btn" onclick="showPage('home')">← 計算一覧に戻る</button></div>
+
+      <div class="card">
+        <h2>💼 転職前後の収支比較</h2>
+        <p class="section-lead">転職で年収が変わっても、家賃や通勤費などが変われば手元に残る金額も変わります。</p>
+
+        <div class="two-col">
+          <div>
+            <h3>現在</h3>
+            <div class="field"><label>年間手取り</label><input id="jc-now-income" type="number" value="3600000" min="0"></div>
+            <div class="field"><label>年間支出</label><input id="jc-now-expense" type="number" value="2400000" min="0"></div>
+          </div>
+
+          <div>
+            <h3>転職後</h3>
+            <div class="field"><label>年間手取り</label><input id="jc-new-income" type="number" value="4000000" min="0"></div>
+            <div class="field"><label>年間支出</label><input id="jc-new-expense" type="number" value="2700000" min="0"></div>
+          </div>
+        </div>
+
+        <button class="primary-btn" onclick="calcJobChange()">💼 比較する</button>
+      </div>
+
+      <div class="card result" id="jc-result">
+        <h2>📊 比較結果</h2>
+        <div class="compare">
+          <table>
+            <thead><tr><th></th><th>現在</th><th>転職後</th><th>差額</th></tr></thead>
+            <tbody>
+              <tr><td>年間手取り</td><td id="jc-i1"></td><td id="jc-i2"></td><td id="jc-id"></td></tr>
+              <tr><td>年間支出</td><td id="jc-e1"></td><td id="jc-e2"></td><td id="jc-ed"></td></tr>
+              <tr><td>年間で残る金額</td><td id="jc-s1"></td><td id="jc-s2"></td><td id="jc-sd"></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="judgement" id="jc-judgement"></div>
+      </div>
+    </section>
+
+
+    <!-- SAVINGS -->
+    <section id="page-savings" class="page">
+      <div class="back-row"><button class="back-btn" onclick="showPage('home')">← 計算一覧に戻る</button></div>
+
+      <div class="card">
+        <h2>🏦 貯金計画シミュレーター</h2>
+        <p class="section-lead">目標額・現在の貯金・毎月の貯金額を入力すると、達成までの期間を計算します。</p>
+
+        <div class="form-grid">
+          <div class="field"><label>貯金目標額</label><input id="sv-goal" type="number" value="1000000" min="0"></div>
+          <div class="field"><label>現在の貯金</label><input id="sv-current" type="number" value="200000" min="0"></div>
+          <div class="field"><label>毎月の貯金額</label><input id="sv-month" type="number" value="50000" min="1"></div>
+          <div class="field"><label>毎年の臨時貯金</label><input id="sv-extra" type="number" value="0" min="0"></div>
+        </div>
+
+        <button class="primary-btn" onclick="calcSavings()">🏦 貯金期間を計算</button>
+      </div>
+
+      <div class="card result" id="sv-result">
+        <h2>📊 貯金計画</h2>
+        <div class="big-result">
+          <div class="label">目標達成まで</div>
+          <div class="number" id="sv-months"></div>
+        </div>
+        <div class="result-grid">
+          <div class="result-box"><div class="label">不足額</div><div class="number" id="sv-needed"></div></div>
+          <div class="result-box"><div class="label">年間貯金額</div><div class="number" id="sv-annual"></div></div>
+          <div class="result-box"><div class="label">達成時点の貯金</div><div class="number" id="sv-final"></div></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- LOAN -->
+    <section id="page-loan" class="page">
+      <div class="back-row"><button class="back-btn" onclick="showPage('home')">← 計算一覧に戻る</button></div>
+
+      <div class="card">
+        <h2>🧮 ローン返済シミュレーター</h2>
+        <p class="section-lead">元利均等返済を前提に、毎月返済額・総返済額・利息総額を計算します。</p>
+
+        <div class="form-grid">
+          <div class="field"><label>借入額</label><input id="lo-principal" type="number" value="3000000" min="0"></div>
+          <div class="field"><label>年利（%）</label><input id="lo-rate" type="number" value="3" min="0" step="0.01"></div>
+          <div class="field"><label>返済期間（年）</label><input id="lo-years" type="number" value="5" min="1" max="50"></div>
+        </div>
+
+        <button class="primary-btn" onclick="calcLoan()">🧮 ローンを計算</button>
+      </div>
+
+      <div class="card result" id="lo-result">
+        <h2>📊 ローン返済</h2>
+        <div class="result-grid">
+          <div class="result-box"><div class="label">毎月返済額</div><div class="number" id="lo-month"></div></div>
+          <div class="result-box"><div class="label">総返済額</div><div class="number" id="lo-total"></div></div>
+          <div class="result-box"><div class="label">利息総額</div><div class="number" id="lo-interest"></div></div>
+          <div class="result-box"><div class="label">返済回数</div><div class="number" id="lo-count"></div></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- FAQ -->
+    <section id="page-faq" class="page">
+      <div class="back-row"><button class="back-btn" onclick="showPage('home')">← 計算一覧に戻る</button></div>
+
+      <div class="card">
+        <h2>よくある質問</h2>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">計算結果は実際の金額と同じですか？ <span>＋</span></button>
+          <div class="faq-a">いいえ。入力された条件から計算した目安です。税金、学費、保険、家賃、旅行料金などは個人や地域、契約内容によって変わります。</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">大学は4年制だけですか？ <span>＋</span></button>
+          <div class="faq-a">いいえ。2年・4年・6年・任意の年数に対応しています。短期課程や長期課程を想定した計算もできます。</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">登録やログインは必要ですか？ <span>＋</span></button>
+          <div class="faq-a">現在のバージョンでは、基本的な計算に登録やログインは必要ありません。</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">広告は表示できますか？ <span>＋</span></button>
+          <div class="faq-a">広告サービスの審査・利用条件を満たしたうえで、正式な広告コードを設置できる構造にしています。広告収益はアクセス数や広告単価などによって変動します。</div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">計算機能を増やせますか？ <span>＋</span></button>
+          <div class="faq-a">はい。今後、住宅ローン、奨学金、結婚、出産、ペット、老後、家計比較などを追加できる構造です。</div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- PRIVACY -->
+    <section id="page-privacy" class="page">
+      <div class="back-row"><button class="back-btn" onclick="showPage('home')">← トップへ戻る</button></div>
+      <div class="card">
+        <h2>プライバシーポリシー</h2>
+        <p class="muted">制定日：2026年9月11日</p>
+
+        <h3>1. 基本方針</h3>
+        <p>本サイトは、利用者のプライバシーを尊重し、適切な情報管理に努めます。</p>
+
+        <h3>2. 取得する情報</h3>
+        <p>本サイトの基本的な計算機能では、入力された数値を計算するためにブラウザ上で処理します。入力内容を本サイトのサーバーへ送信する機能を現在実装していない場合、入力値は計算目的でのみ利用されます。</p>
+
+        <h3>3. アクセス解析・広告</h3>
+        <p>今後、アクセス解析サービスや広告配信サービスを利用する場合があります。これらのサービスでは、Cookie等を利用してアクセス情報が収集される場合があります。実際に導入するサービスに応じて本ポリシーを更新します。</p>
+
+        <h3>4. 外部サービス</h3>
+        <p>広告、アクセス解析、アフィリエイト等の外部サービスを利用する場合、それぞれのサービスの規約・プライバシーポリシーが適用される場合があります。</p>
+
+        <h3>5. 免責事項</h3>
+        <p>本サイトの計算結果は入力条件に基づく参考値です。実際の契約・支出・税額・学費等を保証するものではありません。重要な金銭判断を行う場合は、各サービス提供者や公的機関等の最新情報も確認してください。</p>
+
+        <h3>6. お問い合わせ</h3>
+        <p>お問い合わせ窓口は、運営状況に応じて別途掲載します。</p>
+
+        <h3>7. 改定</h3>
+        <p>必要に応じて本ポリシーを変更する場合があります。</p>
+      </div>
+    </section>
+
+
+    <!-- TERMS -->
+    <section id="page-terms" class="page">
+      <div class="back-row"><button class="back-btn" onclick="showPage('home')">← トップへ戻る</button></div>
+      <div class="card">
+        <h2>利用規約</h2>
+        <p class="muted">制定日：2026年9月11日</p>
+
+        <h3>1. 本サービスについて</h3>
+        <p>本サイトは、生活や支出に関する数値を入力して参考となる計算結果を表示するサービスです。</p>
+
+        <h3>2. 利用について</h3>
+        <p>利用者は、本サイトを適用される法令および公序良俗に従って利用するものとします。</p>
+
+        <h3>3. 計算結果について</h3>
+        <p>計算結果は参考情報であり、実際の金額、契約条件、税額、料金等を保証するものではありません。</p>
+
+        <h3>4. サービス変更</h3>
+        <p>運営者は、必要に応じて本サイトの内容、機能、掲載情報等を変更または停止することがあります。</p>
+
+        <h3>5. 免責</h3>
+        <p>本サイトの利用によって生じた損害について、法令上許される範囲で責任を負わないものとします。</p>
+
+        <h3>6. 規約変更</h3>
+        <p>必要に応じて本規約を変更する場合があります。</p>
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <button onclick="showPage('home')">トップ</button>
+        <button onclick="showPage('faq')">よくある質問</button>
+        <button onclick="showPage('privacy')">プライバシーポリシー</button>
+        <button onclick="showPage('terms')">利用規約</button>
+      </div>
+      <small>© 2026 人生の出費・生活判断シミュレーター</small>
     </div>
-
-
-    <div class="judgment" id="universityJudgment"></div>
-
-    <p class="note">
-      ※このシミュレーターは入力された金額をもとに計算する簡易シミュレーターです。
-      実際の学費・生活費は大学、学部、地域、生活スタイルなどによって異なります。
-    </p>
-
-  </section>
-
-</main>
-
-
-<footer>
-  © 2026 人生の出費・生活判断シミュレーター
-</footer>
+  </footer>
 
 
 <script>
+  "use strict";
 
-  /* =============================
-     共通関数
-  ============================= */
+  /* ==========================================
+     共通
+  ========================================== */
 
-  function getValue(id) {
-    return Number(document.getElementById(id).value) || 0;
+  function $(id) {
+    return document.getElementById(id);
   }
 
+  function val(id) {
+    return Number($(id)?.value) || 0;
+  }
 
-  function formatYen(value) {
+  function setv(id, value) {
+    if ($(id)) $(id).value = value;
+  }
+
+  function yen(value) {
     return Math.round(value).toLocaleString("ja-JP") + "円";
   }
 
+  function num(value) {
+    return Math.round(value).toLocaleString("ja-JP");
+  }
 
-  function setValue(id, value) {
-    document.getElementById(id).value = value;
+  function showResult(id) {
+    $(id).classList.add("show");
+  }
+
+  function judgement(id, text, type) {
+    const el = $(id);
+    el.textContent = text;
+    el.className = "judgement " + (type || "");
   }
 
 
-  /* =============================
-     一人暮らし計算
-  ============================= */
+  /* ==========================================
+     ページ移動
+  ========================================== */
 
-  function calculate() {
+  function showPage(name) {
+    document.querySelectorAll(".page").forEach(page => {
+      page.classList.remove("active");
+    });
 
-    const income = getValue("income");
-    const rent = getValue("rent");
-    const food = getValue("food");
-    const utility = getValue("utility");
-    const internet = getValue("internet");
-    const transport = getValue("transport");
-    const insurance = getValue("insurance");
-    const entertainment = getValue("entertainment");
-    const other = getValue("other");
+    const target = $("page-" + name);
 
+    if (target) {
+      target.classList.add("active");
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+
+  /* ==========================================
+     一人暮らし
+  ========================================== */
+
+  function livingExpense() {
+    return (
+      val("li-rent") +
+      val("li-food") +
+      val("li-utility") +
+      val("li-internet") +
+      val("li-transport") +
+      val("li-insurance") +
+      val("li-entertainment") +
+      val("li-other")
+    );
+  }
+
+  function calcLiving() {
+    const income = val("li-income");
 
     if (income <= 0) {
       alert("月の手取りを入力してください。");
       return;
     }
 
+    const expense = livingExpense();
+    const remain = income - expense;
+    const annualExpense = expense * 12;
+    const annualSave = remain * 12;
+    const rentRate = (val("li-rent") / income) * 100;
+    const saveRate = (remain / income) * 100;
 
-    const monthlyExpense =
-      rent +
-      food +
-      utility +
-      internet +
-      transport +
-      insurance +
-      entertainment +
-      other;
+    $("li-expense").textContent = yen(expense);
+    $("li-remain").textContent = yen(remain);
+    $("li-year-expense").textContent = yen(annualExpense);
+    $("li-year-save").textContent = yen(annualSave);
+    $("li-rent-rate").textContent = rentRate.toFixed(1) + "%";
+    $("li-save-rate").textContent = saveRate.toFixed(1) + "%";
 
-
-    const monthlyRemaining =
-      income - monthlyExpense;
-
-
-    const yearlyExpense =
-      monthlyExpense * 12;
-
-
-    const yearlySaving =
-      monthlyRemaining * 12;
-
-
-    const rentRate =
-      (rent / income) * 100;
-
-
-    const savingRate =
-      (monthlyRemaining / income) * 100;
-
-
-    document.getElementById("monthlyExpense").textContent =
-      formatYen(monthlyExpense);
-
-
-    document.getElementById("monthlyRemaining").textContent =
-      formatYen(monthlyRemaining);
-
-
-    document.getElementById("yearlyExpense").textContent =
-      formatYen(yearlyExpense);
-
-
-    document.getElementById("yearlySaving").textContent =
-      formatYen(yearlySaving);
-
-
-    document.getElementById("rentRate").textContent =
-      rentRate.toFixed(1) + "%";
-
-
-    document.getElementById("savingRate").textContent =
-      savingRate.toFixed(1) + "%";
-
-
-    let judgment = "";
-
-
-    if (monthlyRemaining < 0) {
-
-      judgment =
-        "⚠️ 支出が収入を上回っています。現在の条件では毎月赤字になる計算です。";
-
+    if (remain < 0) {
+      judgement(
+        "li-judgement",
+        "⚠️ 現在の条件では毎月赤字になる計算です。支出を減らすか、収入を増やす必要があります。",
+        "danger"
+      );
     } else if (rentRate > 35) {
-
-      judgment =
-        "⚠️ 家賃負担がかなり大きめです。家賃以外の生活費も考えると注意が必要です。";
-
-    } else if (rentRate > 30) {
-
-      judgment =
-        "💡 家賃はやや高めです。ほかの支出を抑えられるか確認してみましょう。";
-
-    } else if (savingRate >= 20) {
-
-      judgment =
-        "🎉 比較的余裕のある計算です。手取りの20%以上を残せる見込みです。";
-
-    } else if (savingRate >= 10) {
-
-      judgment =
-        "👍 毎月ある程度のお金を残せる計算です。";
-
+      judgement(
+        "li-judgement",
+        "⚠️ 家賃が手取りに対してかなり大きい条件です。他の支出とのバランスも確認してください。",
+        "warning"
+      );
+    } else if (saveRate >= 20) {
+      judgement(
+        "li-judgement",
+        "🎉 入力条件では、手取りの20%以上を残せる計算です。",
+        "success"
+      );
+    } else if (saveRate >= 10) {
+      judgement(
+        "li-judgement",
+        "👍 入力条件では黒字を確保できています。",
+        "success"
+      );
     } else {
-
-      judgment =
-        "💡 黒字ではありますが、急な出費に備えて余裕を持たせると安心です。";
-
+      judgement(
+        "li-judgement",
+        "💡 黒字ですが、急な出費に備える余裕も確認しておくと安心です。",
+        "warning"
+      );
     }
 
-
-    document.getElementById("judgment").textContent =
-      judgment;
-
-
-    document.getElementById("results").style.display =
-      "block";
-
-
-    document.getElementById("results").scrollIntoView({
-      behavior: "smooth"
-    });
-
+    showResult("li-result");
   }
 
+  function reverseLiving() {
+    const expense = livingExpense();
+    const saving = val("li-target-save");
+    const needed = expense + saving;
+    const rent30 = val("li-rent") / 0.30;
 
-  /* =============================
-     必要手取り逆算
-  ============================= */
-
-  function reverseCalculate() {
-
-    const rent = getValue("rent");
-    const food = getValue("food");
-    const utility = getValue("utility");
-    const internet = getValue("internet");
-    const transport = getValue("transport");
-    const insurance = getValue("insurance");
-    const entertainment = getValue("entertainment");
-    const other = getValue("other");
-
-    const targetSaving =
-      getValue("targetSaving");
-
-
-    const monthlyExpense =
-      rent +
-      food +
-      utility +
-      internet +
-      transport +
-      insurance +
-      entertainment +
-      other;
-
-
-    const requiredForLiving =
-      monthlyExpense;
-
-
-    const requiredWithSaving =
-      monthlyExpense + targetSaving;
-
-
-    const requiredForRent30 =
-      rent / 0.30;
-
-
-    document.getElementById("reverseResult").innerHTML = `
-
-      <div>
-        <strong>① 生活費を払うだけなら</strong>
-
-        <div class="reverse-number">
-          ${formatYen(requiredForLiving)}
-        </div>
-      </div>
-
-      <hr>
-
-      <div>
-        <strong>
-          ② 毎月${formatYen(targetSaving)}貯金するなら
-        </strong>
-
-        <div class="reverse-number">
-          ${formatYen(requiredWithSaving)}
-        </div>
-      </div>
-
-      <hr>
-
-      <div>
-        <strong>
-          ③ 家賃を手取りの30%以内にするなら
-        </strong>
-
-        <div class="reverse-number">
-          ${formatYen(requiredForRent30)}
-        </div>
-      </div>
-
-      <p class="note">
-        ※②は「入力した生活費＋目標貯金額」で計算しています。<br>
-        ※③は家賃を手取りの30%とした場合の単純計算です。
-      </p>
-
+    $("li-reverse").innerHTML = `
+      <ul class="summary-list">
+        <li><span>生活費を払うだけ</span><strong>${yen(expense)}</strong></li>
+        <li><span>毎月${yen(saving)}貯金する</span><strong>${yen(needed)}</strong></li>
+        <li><span>家賃を手取り30%とした場合</span><strong>${yen(rent30)}</strong></li>
+      </ul>
+      <p class="help">※入力された生活費をもとにした単純計算です。</p>
     `;
   }
 
 
-  /* =============================
-     大学：年数変更
-  ============================= */
+  /* ==========================================
+     大学
+  ========================================== */
 
-  function changeUniversityYears() {
-
-    const years =
-      document.getElementById("universityYears").value;
-
-    const customBox =
-      document.getElementById("customYearsBox");
-
-
-    if (years === "custom") {
-
-      customBox.classList.remove("hidden");
-
-    } else {
-
-      customBox.classList.add("hidden");
-
-    }
-
+  function toggleCustomYears() {
+    $("un-custom-wrap").style.display =
+      $("un-years").value === "custom" ? "block" : "none";
   }
 
+  function universityPreset() {
+    const type = $("un-type").value;
 
-  /* =============================
-     大学：学校区分の目安
-  ============================= */
-
-  function setUniversityPreset() {
-
-    const schoolType =
-      document.getElementById("schoolType").value;
-
-
-    if (schoolType === "national") {
-
-      setValue("entranceFee", 300000);
-      setValue("annualTuition", 550000);
-
+    if (type === "national") {
+      setv("un-entrance", 300000);
+      setv("un-tuition", 550000);
+    } else if (type === "public") {
+      setv("un-entrance", 300000);
+      setv("un-tuition", 550000);
+    } else {
+      setv("un-entrance", 300000);
+      setv("un-tuition", 1000000);
     }
-
-    else if (schoolType === "public") {
-
-      setValue("entranceFee", 300000);
-      setValue("annualTuition", 550000);
-
-    }
-
-    else {
-
-      setValue("entranceFee", 300000);
-      setValue("annualTuition", 1000000);
-
-    }
-
   }
 
-
-  /* =============================
-     大学：生活費目安
-  ============================= */
-
-  function setLivingPreset() {
-
-    const livingType =
-      document.getElementById("livingType").value;
-
-
-    if (livingType === "alone") {
-
-      setValue("annualLiving", 1200000);
-
+  function livingPreset() {
+    if ($("un-living").value === "alone") {
+      setv("un-living-cost", 1200000);
     } else {
-
-      setValue("annualLiving", 600000);
-
+      setv("un-living-cost", 600000);
     }
-
   }
 
-
-  /* =============================
-     大学計算
-  ============================= */
-
-  function calculateUniversity() {
-
-    let years =
-      document.getElementById("universityYears").value;
-
-
-    if (years === "custom") {
-
-      years =
-        getValue("customYears");
-
-    } else {
-
-      years =
-        Number(years);
-
-    }
-
+  function calcUniversity() {
+    let years = $("un-years").value === "custom"
+      ? val("un-custom-years")
+      : Number($("un-years").value);
 
     if (years <= 0) {
-
       alert("在学年数を入力してください。");
       return;
-
     }
 
+    const entrance = val("un-entrance");
+    const tuition = val("un-tuition") * years;
+    const living = val("un-living-cost") * years;
+    const other = val("un-other") * years;
+    const total = entrance + tuition + living + other;
 
-    const entranceFee =
-      getValue("entranceFee");
+    $("un-total").textContent = yen(total);
+    $("un-years-out").textContent = years + "年";
+    $("un-annual").textContent = yen(total / years);
+    $("un-monthly").textContent = yen(total / (years * 12));
+    $("un-tuition-total").textContent = yen(entrance + tuition);
+    $("un-living-total").textContent = yen(living);
+    $("un-other-total").textContent = yen(other);
 
+    $("un-judgement").textContent =
+      "🎓 " + years + "年間の学費・生活費・その他費用を合計しています。";
 
-    const annualTuition =
-      getValue("annualTuition");
-
-
-    const annualLiving =
-      getValue("annualLiving");
-
-
-    const annualOther =
-      getValue("annualOther");
-
-
-    const tuitionTotal =
-      annualTuition * years;
-
-
-    const livingTotal =
-      annualLiving * years;
-
-
-    const otherTotal =
-      annualOther * years;
-
-
-    const total =
-      entranceFee +
-      tuitionTotal +
-      livingTotal +
-      otherTotal;
-
-
-    const annualAverage =
-      total / years;
-
-
-    const monthlyAverage =
-      total / (years * 12);
-
-
-    document.getElementById("universityTotal").textContent =
-      formatYen(total);
-
-
-    document.getElementById("resultYears").textContent =
-      years + "年";
-
-
-    document.getElementById("universityAnnualAverage").textContent =
-      formatYen(annualAverage);
-
-
-    document.getElementById("universityMonthlyAverage").textContent =
-      formatYen(monthlyAverage);
-
-
-    document.getElementById("universityTuitionTotal").textContent =
-      formatYen(tuitionTotal + entranceFee);
-
-
-    document.getElementById("universityLivingTotal").textContent =
-      formatYen(livingTotal);
-
-
-    document.getElementById("universityOtherTotal").textContent =
-      formatYen(otherTotal);
-
-
-    let judgment = "";
-
-
-    if (years >= 6) {
-
-      judgment =
-        "🎓 6年以上の進学にも対応しています。医学系など長期課程の費用計算にも利用できます。";
-
-    } else if (years >= 4) {
-
-      judgment =
-        "🎓 4年以上の大学生活に必要な総額を確認できます。";
-
-    } else {
-
-      judgment =
-        "🎓 短期課程を含め、入力した在学年数に合わせて計算しています。";
-
-    }
-
-
-    document.getElementById("universityJudgment").textContent =
-      judgment;
-
-
-    document.getElementById("universityResult").style.display =
-      "block";
-
-
-    document.getElementById("universityResult").scrollIntoView({
-      behavior: "smooth"
-    });
-
+    showResult("un-result");
   }
 
+
+  /* ==========================================
+     車
+  ========================================== */
+
+  function monthlyLoan(principal, annualRate, months) {
+    if (principal <= 0 || months <= 0) return 0;
+
+    const r = annualRate / 100 / 12;
+
+    if (r === 0) {
+      return principal / months;
+    }
+
+    return principal * r * Math.pow(1 + r, months) /
+      (Math.pow(1 + r, months) - 1);
+  }
+
+  function calcCar() {
+    const financed = Math.max(0, val("car-price") - val("car-down"));
+    const months = val("car-term");
+    const loanMonth = monthlyLoan(
+      financed,
+      val("car-rate"),
+      months
+    );
+
+    const annualMaintenance =
+      val("car-insurance") +
+      val("car-tax") +
+      val("car-inspection") +
+      val("car-parking") * 12 +
+      val("car-gas") * 12 +
+      val("car-other");
+
+    const annualTotal = annualMaintenance + loanMonth * 12;
+    const loanTotal = loanMonth * months;
+    const fiveYearMaintenance = annualMaintenance * 5;
+
+    $("car-loan-month").textContent = yen(loanMonth);
+    $("car-annual").textContent = yen(annualMaintenance);
+    $("car-total-annual").textContent = yen(annualTotal);
+    $("car-month").textContent = yen(annualTotal / 12);
+    $("car-loan-total").textContent = yen(loanTotal);
+    $("car-five-maint").textContent = yen(fiveYearMaintenance);
+
+    $("car-note").textContent =
+      "車両価格から頭金を引いた額をローン元金として計算しています。燃料代・保険・税金・車検・駐車場などは入力値で変わります。";
+
+    showResult("car-result");
+  }
+
+
+  /* ==========================================
+     引っ越し
+  ========================================== */
+
+  function calcMoving() {
+    const rent = val("mv-rent");
+
+    const deposit = rent * val("mv-deposit-month");
+    const key = rent * val("mv-key-month");
+    const agent = rent * val("mv-agent-month");
+    const contract = val("mv-contract");
+    const moving = val("mv-moving");
+    const furniture = val("mv-furniture");
+    const other = val("mv-other");
+
+    const total =
+      deposit +
+      key +
+      agent +
+      contract +
+      moving +
+      furniture +
+      other;
+
+    $("mv-total").textContent = yen(total);
+    $("mv-deposit").textContent = yen(deposit);
+    $("mv-key").textContent = yen(key);
+    $("mv-agent").textContent = yen(agent);
+    $("mv-contract-out").textContent = yen(contract);
+    $("mv-moving-out").textContent = yen(moving);
+    $("mv-furniture-out").textContent = yen(furniture);
+
+    showResult("mv-result");
+  }
+
+
+  /* ==========================================
+     給料
+  ========================================== */
+
+  function calcSalary() {
+    const monthly = val("sa-month");
+    const bonus = val("sa-bonus");
+    const rate = val("sa-rate") / 100;
+    const expense = val("sa-expense");
+
+    const annual = monthly * 12 + bonus;
+    const takeAnnual = annual * rate;
+    const takeMonthly = takeAnnual / 12;
+    const remain = takeMonthly - expense;
+    const annualRemain = remain * 12;
+
+    $("sa-annual").textContent = yen(annual);
+    $("sa-takeannual").textContent = yen(takeAnnual);
+    $("sa-takemonth").textContent = yen(takeMonthly);
+    $("sa-expense-out").textContent = yen(expense);
+    $("sa-remain").textContent = yen(remain);
+    $("sa-year-remain").textContent = yen(annualRemain);
+
+    showResult("sa-result");
+  }
+
+
+  /* ==========================================
+     旅行
+  ========================================== */
+
+  function calcTravel() {
+    const people = val("tr-people");
+    const nights = val("tr-nights");
+    const days = nights + 1;
+
+    const transport = val("tr-transport") * people;
+    const hotel = val("tr-hotel") * people * nights;
+    const food = val("tr-food") * people * days;
+    const sight = val("tr-sight") * people;
+    const shopping = val("tr-shopping") * people;
+    const other = val("tr-other");
+
+    const total =
+      transport +
+      hotel +
+      food +
+      sight +
+      shopping +
+      other;
+
+    $("tr-total").textContent = yen(total);
+    $("tr-per").textContent = yen(total / people);
+    $("tr-transport-out").textContent = yen(transport);
+    $("tr-hotel-out").textContent = yen(hotel);
+    $("tr-food-out").textContent = yen(food);
+    $("tr-sight-out").textContent = yen(sight);
+    $("tr-other-out").textContent = yen(shopping + other);
+
+    showResult("tr-result");
+  }
+
+
+  /* ==========================================
+     転職比較
+  ========================================== */
+
+  function calcJobChange() {
+    const nowIncome = val("jc-now-income");
+    const nowExpense = val("jc-now-expense");
+    const newIncome = val("jc-new-income");
+    const newExpense = val("jc-new-expense");
+
+    const nowSave = nowIncome - nowExpense;
+    const newSave = newIncome - newExpense;
+
+    $("jc-i1").textContent = yen(nowIncome);
+    $("jc-i2").textContent = yen(newIncome);
+    $("jc-id").textContent = yen(newIncome - nowIncome);
+
+    $("jc-e1").textContent = yen(nowExpense);
+    $("jc-e2").textContent = yen(newExpense);
+    $("jc-ed").textContent = yen(newExpense - nowExpense);
+
+    $("jc-s1").textContent = yen(nowSave);
+    $("jc-s2").textContent = yen(newSave);
+    $("jc-sd").textContent = yen(newSave - nowSave);
+
+    if (newSave > nowSave) {
+      judgement(
+        "jc-judgement",
+        "📈 入力条件では、転職後の年間で残る金額が現在より増えます。",
+        "success"
+      );
+    } else if (newSave < nowSave) {
+      judgement(
+        "jc-judgement",
+        "📉 入力条件では、転職後の年間で残る金額が現在より減ります。",
+        "warning"
+      );
+    } else {
+      judgement(
+        "jc-judgement",
+        "➡️ 入力条件では、年間で残る金額は同じです。",
+        ""
+      );
+    }
+
+    showResult("jc-result");
+  }
+
+
+  /* ==========================================
+     貯金
+  ========================================== */
+
+  function calcSavings() {
+    const goal = val("sv-goal");
+    const current = val("sv-current");
+    const monthly = val("sv-month");
+    const extraAnnual = val("sv-extra");
+
+    const needed = Math.max(0, goal - current);
+
+    if (needed === 0) {
+      $("sv-months").textContent = "0か月";
+      $("sv-needed").textContent = yen(0);
+      $("sv-annual").textContent = yen(monthly * 12 + extraAnnual);
+      $("sv-final").textContent = yen(current);
+      showResult("sv-result");
+      return;
+    }
+
+    let months = 0;
+    let balance = current;
+
+    while (balance < goal && months < 1200) {
+      months++;
+      balance += monthly;
+
+      if (months % 12 === 0) {
+        balance += extraAnnual;
+      }
+    }
+
+    $("sv-months").textContent = months + "か月";
+    $("sv-needed").textContent = yen(needed);
+    $("sv-annual").textContent = yen(monthly * 12 + extraAnnual);
+    $("sv-final").textContent = yen(balance);
+
+    showResult("sv-result");
+  }
+
+
+  /* ==========================================
+     ローン
+  ========================================== */
+
+  function calcLoan() {
+    const principal = val("lo-principal");
+    const annualRate = val("lo-rate");
+    const years = val("lo-years");
+    const months = years * 12;
+
+    const payment = monthlyLoan(
+      principal,
+      annualRate,
+      months
+    );
+
+    const total = payment * months;
+    const interest = total - principal;
+
+    $("lo-month").textContent = yen(payment);
+    $("lo-total").textContent = yen(total);
+    $("lo-interest").textContent = yen(interest);
+    $("lo-count").textContent = months + "回";
+
+    showResult("lo-result");
+  }
+
+
+  /* ==========================================
+     FAQ
+  ========================================== */
+
+  function toggleFaq(button) {
+    const item = button.parentElement;
+    item.classList.toggle("open");
+
+    const symbol = button.querySelector("span");
+
+    if (symbol) {
+      symbol.textContent =
+        item.classList.contains("open") ? "−" : "＋";
+    }
+  }
+
+
+  /* ==========================================
+     初期状態
+  ========================================== */
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // URLのハッシュからページを開けるようにする
+    const hash = location.hash.replace("#", "");
+
+    const allowed = [
+      "home",
+      "living",
+      "university",
+      "car",
+      "moving",
+      "salary",
+      "travel",
+      "jobchange",
+      "savings",
+      "loan",
+      "faq",
+      "privacy",
+      "terms"
+    ];
+
+    if (allowed.includes(hash)) {
+      showPage(hash);
+    }
+  });
 </script>
 
 </body>
