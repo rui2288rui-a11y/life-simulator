@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>人生の出費・生活判断シミュレーター</title>
+
+  <meta name="description" content="一人暮らしや引っ越し、生活費などにかかるお金を簡単にシミュレーションできる無料サイトです。">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    header {
+      background: white;
+      padding: 24px 20px;
+      text-align: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    header p {
+      margin: 10px 0 0;
+      color: #666;
+      font-size: 14px;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+
+    .hero {
+      background: white;
+      border-radius: 16px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .hero h2 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    .hero p {
+      color: #666;
+      line-height: 1.7;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 14px 24px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .section {
+      margin-top: 25px;
+      background: white;
+      border-radius: 16px;
+      padding: 25px 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .section h3 {
+      margin-top: 0;
+    }
+
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .menu-item {
+      padding: 18px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #fafafa;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #888;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 21px;
+      }
+
+      .hero h2 {
+        font-size: 21px;
+      }
+
+      .menu {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>人生の出費・生活判断シミュレーター</h1>
+    <p>「これ、結局いくらかかる？」を簡単に計算</p>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <h2>あなたの場合、結局いくら？</h2>
+
+      <p>
+        一人暮らし・引っ越し・仕事・車・旅行など、
+        暮らしにかかるお金を簡単にシミュレーションできます。
+      </p>
+
+      <a href="#simulation" class="button">
+        一人暮らし費用を計算する
+      </a>
+    </section>
+
+    <section class="section" id="simulation">
+      <h3>📊 シミュレーター</h3>
+
+      <div class="menu">
+        <div class="menu-item">
+          🏠<br>
+          一人暮らし費用
+        </div>
+
+        <div class="menu-item">
+          🚚<br>
+          引っ越し費用
+        </div>
+
+        <div class="menu-item">
+          💰<br>
+          年収・手取り
+        </div>
+
+        <div class="menu-item">
+          🚗<br>
+          車の維持費
+        </div>
+
+        <div class="menu-item">
+          🎓<br>
+          大学4年間の費用
+        </div>
+
+        <div class="menu-item">
+          ✈️<br>
+          旅行費用
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 人生の出費・生活判断シミュレーター
+  </footer>
+
+</body>
+</html>
