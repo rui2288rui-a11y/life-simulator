@@ -2,13 +2,12 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <meta name="description"
-    content="一人暮らしに毎月いくらかかる？手取りと生活費を入力するだけで、月の支出・残るお金・年間貯金額・家賃負担率・必要な手取り額を無料で計算できます。">
+    content="一人暮らしや大学生活にいくらかかる？生活費や学費を入力するだけで、毎月の支出、年間貯金額、大学卒業までの総額などを無料で計算できます。">
 
-  <title>一人暮らし費用シミュレーター｜人生の出費・生活判断シミュレーター</title>
+  <title>人生の出費・生活判断シミュレーター</title>
 
   <style>
     * {
@@ -31,7 +30,7 @@
     header {
       background: linear-gradient(135deg, #4f7cff, #6b5cff);
       color: white;
-      padding: 35px 20px;
+      padding: 40px 20px;
       text-align: center;
     }
 
@@ -46,7 +45,7 @@
     }
 
     main {
-      max-width: 850px;
+      max-width: 900px;
       margin: 30px auto;
       padding: 0 16px;
     }
@@ -61,7 +60,11 @@
 
     h2 {
       margin-top: 0;
-      font-size: 23px;
+      font-size: 24px;
+    }
+
+    h3 {
+      margin-top: 25px;
     }
 
     .description {
@@ -79,16 +82,19 @@
       margin-bottom: 7px;
     }
 
-    input {
+    input,
+    select {
       width: 100%;
       padding: 13px;
       font-size: 16px;
       border: 1px solid #ccd3df;
       border-radius: 10px;
       outline: none;
+      background: white;
     }
 
-    input:focus {
+    input:focus,
+    select:focus {
       border-color: #4f7cff;
     }
 
@@ -170,10 +176,6 @@
       border-top: 1px solid #e1e5eb;
     }
 
-    .reverse-box h3 {
-      margin-top: 0;
-    }
-
     .reverse-result {
       margin-top: 15px;
       padding: 18px;
@@ -186,10 +188,37 @@
       font-weight: bold;
     }
 
+    .university-result {
+      display: none;
+    }
+
+    .university-total {
+      background: #eef3ff;
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .university-total-title {
+      color: #555;
+      font-size: 15px;
+    }
+
+    .university-total-number {
+      font-size: 34px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
     .note {
       color: #777;
       font-size: 13px;
       margin-top: 12px;
+    }
+
+    .hidden {
+      display: none;
     }
 
     footer {
@@ -200,6 +229,7 @@
     }
 
     @media (max-width: 600px) {
+
       header h1 {
         font-size: 24px;
       }
@@ -210,6 +240,10 @@
 
       .result-grid {
         grid-template-columns: 1fr;
+      }
+
+      .university-total-number {
+        font-size: 28px;
       }
     }
   </style>
@@ -223,6 +257,10 @@
 </header>
 
 <main>
+
+  <!-- ============================= -->
+  <!-- 一人暮らし -->
+  <!-- ============================= -->
 
   <section class="card">
 
@@ -306,9 +344,13 @@
   </section>
 
 
+  <!-- ============================= -->
+  <!-- 一人暮らし結果 -->
+  <!-- ============================= -->
+
   <section class="card results" id="results">
 
-    <h2>📊 シミュレーション結果</h2>
+    <h2>📊 一人暮らしシミュレーション結果</h2>
 
     <div class="result-grid">
 
@@ -347,6 +389,8 @@
     <div class="judgment" id="judgment"></div>
 
 
+    <!-- 必要手取り逆算 -->
+
     <div class="reverse-box">
 
       <h3>🔄 この生活には手取りいくら必要？</h3>
@@ -377,12 +421,289 @@
         ここに必要な手取り額が表示されます。
       </div>
 
-      <p class="note">
-        ※この計算は入力された生活費をもとにした目安です。
-        税金・社会保険料などは、手取り額として入力された金額には含めません。
-      </p>
+    </div>
+
+  </section>
+
+
+  <!-- ============================= -->
+  <!-- 大学費用 -->
+  <!-- ============================= -->
+
+  <section class="card">
+
+    <h2>🎓 大学費用シミュレーター</h2>
+
+    <p class="description">
+      大学の在学年数、学校区分、入学時費用、年間学費、
+      生活費などを入力して、卒業までに必要なお金を計算します。
+    </p>
+
+
+    <div class="input-group">
+
+      <label for="universityYears">
+        📅 在学年数
+      </label>
+
+      <select id="universityYears" onchange="changeUniversityYears()">
+        <option value="2">2年制</option>
+        <option value="4" selected>4年制</option>
+        <option value="6">6年制</option>
+        <option value="custom">その他</option>
+      </select>
 
     </div>
+
+
+    <div class="input-group hidden" id="customYearsBox">
+
+      <label for="customYears">
+        ✏️ 在学年数を入力
+      </label>
+
+      <input
+        id="customYears"
+        type="number"
+        value="3"
+        min="1"
+        max="20"
+      >
+
+    </div>
+
+
+    <div class="input-group">
+
+      <label for="schoolType">
+        🏫 学校区分
+      </label>
+
+      <select id="schoolType" onchange="setUniversityPreset()">
+        <option value="national">国立</option>
+        <option value="public">公立</option>
+        <option value="private" selected>私立</option>
+      </select>
+
+    </div>
+
+
+    <div class="input-group">
+
+      <label for="livingType">
+        🏠 生活スタイル
+      </label>
+
+      <select id="livingType">
+        <option value="home" selected>実家暮らし</option>
+        <option value="alone">一人暮らし</option>
+      </select>
+
+    </div>
+
+
+    <div class="input-group">
+
+      <label for="entranceFee">
+        💴 入学時費用
+      </label>
+
+      <input
+        id="entranceFee"
+        type="number"
+        value="300000"
+        min="0"
+      >
+
+    </div>
+
+
+    <div class="input-group">
+
+      <label for="annualTuition">
+        💰 年間学費
+      </label>
+
+      <input
+        id="annualTuition"
+        type="number"
+        value="1000000"
+        min="0"
+      >
+
+    </div>
+
+
+    <div class="input-group">
+
+      <label for="annualLiving">
+        🍚 年間生活費
+      </label>
+
+      <input
+        id="annualLiving"
+        type="number"
+        value="600000"
+        min="0"
+      >
+
+      <button
+        class="hint-button"
+        onclick="setLivingPreset()"
+      >
+        生活費の目安を入れる
+      </button>
+
+    </div>
+
+
+    <div class="input-group">
+
+      <label for="annualOther">
+        📦 年間その他費用
+      </label>
+
+      <input
+        id="annualOther"
+        type="number"
+        value="100000"
+        min="0"
+      >
+
+    </div>
+
+
+    <button
+      class="calculate-button"
+      onclick="calculateUniversity()"
+    >
+      🎓 大学費用を計算
+    </button>
+
+  </section>
+
+
+  <!-- ============================= -->
+  <!-- 大学結果 -->
+  <!-- ============================= -->
+
+  <section
+    class="card university-result"
+    id="universityResult"
+  >
+
+    <h2>🎓 大学費用シミュレーション結果</h2>
+
+    <div class="university-total">
+
+      <div class="university-total-title">
+        卒業までに必要な総額
+      </div>
+
+      <div
+        class="university-total-number"
+        id="universityTotal"
+      >
+        0円
+      </div>
+
+    </div>
+
+
+    <div class="result-grid">
+
+      <div class="result-box">
+        <div class="result-title">
+          在学年数
+        </div>
+
+        <div
+          class="result-value"
+          id="resultYears"
+        >
+          0年
+        </div>
+      </div>
+
+
+      <div class="result-box">
+        <div class="result-title">
+          年間平均
+        </div>
+
+        <div
+          class="result-value"
+          id="universityAnnualAverage"
+        >
+          0円
+        </div>
+      </div>
+
+
+      <div class="result-box">
+        <div class="result-title">
+          月額平均
+        </div>
+
+        <div
+          class="result-value"
+          id="universityMonthlyAverage"
+        >
+          0円
+        </div>
+      </div>
+
+
+      <div class="result-box">
+        <div class="result-title">
+          学費総額
+        </div>
+
+        <div
+          class="result-value"
+          id="universityTuitionTotal"
+        >
+          0円
+        </div>
+      </div>
+
+
+      <div class="result-box">
+        <div class="result-title">
+          生活費総額
+        </div>
+
+        <div
+          class="result-value"
+          id="universityLivingTotal"
+        >
+          0円
+        </div>
+      </div>
+
+
+      <div class="result-box">
+        <div class="result-title">
+          その他費用総額
+        </div>
+
+        <div
+          class="result-value"
+          id="universityOtherTotal"
+        >
+          0円
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="judgment" id="universityJudgment"></div>
+
+    <p class="note">
+      ※このシミュレーターは入力された金額をもとに計算する簡易シミュレーターです。
+      実際の学費・生活費は大学、学部、地域、生活スタイルなどによって異なります。
+    </p>
 
   </section>
 
@@ -395,6 +716,10 @@
 
 
 <script>
+
+  /* =============================
+     共通関数
+  ============================= */
 
   function getValue(id) {
     return Number(document.getElementById(id).value) || 0;
@@ -411,6 +736,10 @@
   }
 
 
+  /* =============================
+     一人暮らし計算
+  ============================= */
+
   function calculate() {
 
     const income = getValue("income");
@@ -423,10 +752,12 @@
     const entertainment = getValue("entertainment");
     const other = getValue("other");
 
+
     if (income <= 0) {
       alert("月の手取りを入力してください。");
       return;
     }
+
 
     const monthlyExpense =
       rent +
@@ -438,17 +769,22 @@
       entertainment +
       other;
 
+
     const monthlyRemaining =
       income - monthlyExpense;
+
 
     const yearlyExpense =
       monthlyExpense * 12;
 
+
     const yearlySaving =
       monthlyRemaining * 12;
 
+
     const rentRate =
       (rent / income) * 100;
+
 
     const savingRate =
       (monthlyRemaining / income) * 100;
@@ -457,17 +793,22 @@
     document.getElementById("monthlyExpense").textContent =
       formatYen(monthlyExpense);
 
+
     document.getElementById("monthlyRemaining").textContent =
       formatYen(monthlyRemaining);
+
 
     document.getElementById("yearlyExpense").textContent =
       formatYen(yearlyExpense);
 
+
     document.getElementById("yearlySaving").textContent =
       formatYen(yearlySaving);
 
+
     document.getElementById("rentRate").textContent =
       rentRate.toFixed(1) + "%";
+
 
     document.getElementById("savingRate").textContent =
       savingRate.toFixed(1) + "%";
@@ -501,15 +842,10 @@
       judgment =
         "👍 毎月ある程度のお金を残せる計算です。";
 
-    } else if (savingRate >= 0) {
-
-      judgment =
-        "💡 黒字ではありますが、急な出費に備えて余裕を持たせると安心です。";
-
     } else {
 
       judgment =
-        "⚠️ 現在の条件では赤字になる計算です。";
+        "💡 黒字ではありますが、急な出費に備えて余裕を持たせると安心です。";
 
     }
 
@@ -517,14 +853,21 @@
     document.getElementById("judgment").textContent =
       judgment;
 
+
     document.getElementById("results").style.display =
       "block";
+
 
     document.getElementById("results").scrollIntoView({
       behavior: "smooth"
     });
+
   }
 
+
+  /* =============================
+     必要手取り逆算
+  ============================= */
 
   function reverseCalculate() {
 
@@ -555,6 +898,7 @@
     const requiredForLiving =
       monthlyExpense;
 
+
     const requiredWithSaving =
       monthlyExpense + targetSaving;
 
@@ -567,6 +911,7 @@
 
       <div>
         <strong>① 生活費を払うだけなら</strong>
+
         <div class="reverse-number">
           ${formatYen(requiredForLiving)}
         </div>
@@ -575,7 +920,10 @@
       <hr>
 
       <div>
-        <strong>② 毎月${formatYen(targetSaving)}貯金するなら</strong>
+        <strong>
+          ② 毎月${formatYen(targetSaving)}貯金するなら
+        </strong>
+
         <div class="reverse-number">
           ${formatYen(requiredWithSaving)}
         </div>
@@ -584,7 +932,10 @@
       <hr>
 
       <div>
-        <strong>③ 家賃を手取りの30%以内にするなら</strong>
+        <strong>
+          ③ 家賃を手取りの30%以内にするなら
+        </strong>
+
         <div class="reverse-number">
           ${formatYen(requiredForRent30)}
         </div>
@@ -596,6 +947,227 @@
       </p>
 
     `;
+  }
+
+
+  /* =============================
+     大学：年数変更
+  ============================= */
+
+  function changeUniversityYears() {
+
+    const years =
+      document.getElementById("universityYears").value;
+
+    const customBox =
+      document.getElementById("customYearsBox");
+
+
+    if (years === "custom") {
+
+      customBox.classList.remove("hidden");
+
+    } else {
+
+      customBox.classList.add("hidden");
+
+    }
+
+  }
+
+
+  /* =============================
+     大学：学校区分の目安
+  ============================= */
+
+  function setUniversityPreset() {
+
+    const schoolType =
+      document.getElementById("schoolType").value;
+
+
+    if (schoolType === "national") {
+
+      setValue("entranceFee", 300000);
+      setValue("annualTuition", 550000);
+
+    }
+
+    else if (schoolType === "public") {
+
+      setValue("entranceFee", 300000);
+      setValue("annualTuition", 550000);
+
+    }
+
+    else {
+
+      setValue("entranceFee", 300000);
+      setValue("annualTuition", 1000000);
+
+    }
+
+  }
+
+
+  /* =============================
+     大学：生活費目安
+  ============================= */
+
+  function setLivingPreset() {
+
+    const livingType =
+      document.getElementById("livingType").value;
+
+
+    if (livingType === "alone") {
+
+      setValue("annualLiving", 1200000);
+
+    } else {
+
+      setValue("annualLiving", 600000);
+
+    }
+
+  }
+
+
+  /* =============================
+     大学計算
+  ============================= */
+
+  function calculateUniversity() {
+
+    let years =
+      document.getElementById("universityYears").value;
+
+
+    if (years === "custom") {
+
+      years =
+        getValue("customYears");
+
+    } else {
+
+      years =
+        Number(years);
+
+    }
+
+
+    if (years <= 0) {
+
+      alert("在学年数を入力してください。");
+      return;
+
+    }
+
+
+    const entranceFee =
+      getValue("entranceFee");
+
+
+    const annualTuition =
+      getValue("annualTuition");
+
+
+    const annualLiving =
+      getValue("annualLiving");
+
+
+    const annualOther =
+      getValue("annualOther");
+
+
+    const tuitionTotal =
+      annualTuition * years;
+
+
+    const livingTotal =
+      annualLiving * years;
+
+
+    const otherTotal =
+      annualOther * years;
+
+
+    const total =
+      entranceFee +
+      tuitionTotal +
+      livingTotal +
+      otherTotal;
+
+
+    const annualAverage =
+      total / years;
+
+
+    const monthlyAverage =
+      total / (years * 12);
+
+
+    document.getElementById("universityTotal").textContent =
+      formatYen(total);
+
+
+    document.getElementById("resultYears").textContent =
+      years + "年";
+
+
+    document.getElementById("universityAnnualAverage").textContent =
+      formatYen(annualAverage);
+
+
+    document.getElementById("universityMonthlyAverage").textContent =
+      formatYen(monthlyAverage);
+
+
+    document.getElementById("universityTuitionTotal").textContent =
+      formatYen(tuitionTotal + entranceFee);
+
+
+    document.getElementById("universityLivingTotal").textContent =
+      formatYen(livingTotal);
+
+
+    document.getElementById("universityOtherTotal").textContent =
+      formatYen(otherTotal);
+
+
+    let judgment = "";
+
+
+    if (years >= 6) {
+
+      judgment =
+        "🎓 6年以上の進学にも対応しています。医学系など長期課程の費用計算にも利用できます。";
+
+    } else if (years >= 4) {
+
+      judgment =
+        "🎓 4年以上の大学生活に必要な総額を確認できます。";
+
+    } else {
+
+      judgment =
+        "🎓 短期課程を含め、入力した在学年数に合わせて計算しています。";
+
+    }
+
+
+    document.getElementById("universityJudgment").textContent =
+      judgment;
+
+
+    document.getElementById("universityResult").style.display =
+      "block";
+
+
+    document.getElementById("universityResult").scrollIntoView({
+      behavior: "smooth"
+    });
+
   }
 
 </script>
