@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>人生の出費・生活判断シミュレーター</title>
+  <title>一人暮らし費用シミュレーター｜人生の出費・生活判断シミュレーター</title>
 
-  <meta name="description" content="一人暮らしや引っ越し、生活費などにかかるお金を簡単にシミュレーションできる無料サイトです。">
+  <meta name="description" content="一人暮らしに毎月いくらかかる？手取りと生活費を入力するだけで、月の支出・残るお金・年間貯金額・家賃負担率を無料で計算できます。">
 
   <style>
     * {
@@ -15,108 +15,225 @@
 
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f7fb;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      background: #f4f7fb;
       color: #222;
     }
 
     header {
       background: white;
-      padding: 24px 20px;
-      text-align: center;
       border-bottom: 1px solid #e5e7eb;
+      padding: 22px 16px;
+      text-align: center;
     }
 
     header h1 {
       margin: 0;
-      font-size: 26px;
+      font-size: 24px;
+      line-height: 1.4;
     }
 
     header p {
-      margin: 10px 0 0;
+      margin: 8px 0 0;
       color: #666;
       font-size: 14px;
     }
 
     main {
-      max-width: 800px;
+      max-width: 760px;
       margin: 30px auto;
       padding: 0 16px;
     }
 
-    .hero {
+    .intro {
       background: white;
-      border-radius: 16px;
-      padding: 30px 20px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border-radius: 18px;
+      padding: 28px 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
     }
 
-    .hero h2 {
-      margin-top: 0;
-      font-size: 24px;
+    .intro h2 {
+      margin: 0 0 12px;
+      font-size: 25px;
     }
 
-    .hero p {
+    .intro p {
+      margin: 0;
       color: #666;
-      line-height: 1.7;
+      line-height: 1.8;
     }
 
-    .button {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 14px 24px;
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 21px;
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .input-description {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 7px;
+    }
+
+    .input-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px 12px;
+      border: 1px solid #d8dde6;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+      background: #fff;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .yen {
+      white-space: nowrap;
+      color: #555;
+    }
+
+    .calculate-button {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
       background: #2563eb;
       color: white;
-      text-decoration: none;
-      border-radius: 10px;
+      font-size: 17px;
       font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
     }
 
-    .section {
-      margin-top: 25px;
-      background: white;
-      border-radius: 16px;
-      padding: 25px 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    .calculate-button:hover {
+      opacity: 0.9;
     }
 
-    .section h3 {
-      margin-top: 0;
+    .result {
+      display: none;
     }
 
-    .menu {
+    .result.show {
+      display: block;
+    }
+
+    .result-main {
+      text-align: center;
+      background: #f7f9ff;
+      border-radius: 14px;
+      padding: 22px 15px;
+      margin-bottom: 15px;
+    }
+
+    .result-main .label {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .result-main .number {
+      font-size: 34px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .result-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
 
-    .menu-item {
-      padding: 18px;
+    .result-box {
       border: 1px solid #e5e7eb;
       border-radius: 12px;
-      background: #fafafa;
+      padding: 17px 12px;
       text-align: center;
+    }
+
+    .result-box .title {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .result-box .value {
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .judgment {
+      margin-top: 15px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #f8fafc;
+      line-height: 1.7;
+    }
+
+    .judgment strong {
+      font-size: 18px;
+    }
+
+    .note {
+      margin-top: 15px;
+      color: #888;
+      font-size: 12px;
+      line-height: 1.7;
     }
 
     footer {
       text-align: center;
-      padding: 30px 20px;
+      padding: 30px 16px;
       color: #888;
-      font-size: 13px;
+      font-size: 12px;
     }
 
     @media (max-width: 600px) {
       header h1 {
+        font-size: 20px;
+      }
+
+      .intro h2 {
         font-size: 21px;
       }
 
-      .hero h2 {
-        font-size: 21px;
+      .card {
+        padding: 22px 17px;
       }
 
-      .menu {
+      .result-grid {
         grid-template-columns: 1fr;
+      }
+
+      .result-main .number {
+        font-size: 30px;
       }
     }
   </style>
@@ -124,67 +241,273 @@
 
 <body>
 
-  <header>
-    <h1>人生の出費・生活判断シミュレーター</h1>
-    <p>「これ、結局いくらかかる？」を簡単に計算</p>
-  </header>
+<header>
+  <h1>人生の出費・生活判断シミュレーター</h1>
+  <p>「これ、結局いくらかかる？」を簡単に計算</p>
+</header>
 
-  <main>
+<main>
 
-    <section class="hero">
-      <h2>あなたの場合、結局いくら？</h2>
+  <section class="intro">
+    <h2>🏠 一人暮らし費用シミュレーター</h2>
 
-      <p>
-        一人暮らし・引っ越し・仕事・車・旅行など、
-        暮らしにかかるお金を簡単にシミュレーションできます。
-      </p>
+    <p>
+      一人暮らしを始めたら、毎月いくら必要になる？
+      手取りと生活費を入力するだけで、
+      月の支出・残るお金・年間貯金額などを簡単に計算できます。
+    </p>
+  </section>
 
-      <a href="#simulation" class="button">
-        一人暮らし費用を計算する
-      </a>
-    </section>
+  <section class="card">
 
-    <section class="section" id="simulation">
-      <h3>📊 シミュレーター</h3>
+    <h2>① 収入を入力</h2>
 
-      <div class="menu">
-        <div class="menu-item">
-          🏠<br>
-          一人暮らし費用
-        </div>
-
-        <div class="menu-item">
-          🚚<br>
-          引っ越し費用
-        </div>
-
-        <div class="menu-item">
-          💰<br>
-          年収・手取り
-        </div>
-
-        <div class="menu-item">
-          🚗<br>
-          車の維持費
-        </div>
-
-        <div class="menu-item">
-          🎓<br>
-          大学4年間の費用
-        </div>
-
-        <div class="menu-item">
-          ✈️<br>
-          旅行費用
-        </div>
+    <div class="input-group">
+      <label for="income">毎月の手取り</label>
+      <div class="input-description">
+        税金などを引いた後、実際に受け取る金額
       </div>
-    </section>
 
-  </main>
+      <div class="input-box">
+        <input id="income" type="number" min="0" value="250000">
+        <span class="yen">円</span>
+      </div>
+    </div>
 
-  <footer>
-    © 2026 人生の出費・生活判断シミュレーター
-  </footer>
+  </section>
+
+  <section class="card">
+
+    <h2>② 毎月の支出を入力</h2>
+
+    <div class="input-group">
+      <label for="rent">家賃</label>
+      <div class="input-box">
+        <input id="rent" type="number" min="0" value="70000">
+        <span class="yen">円</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="food">食費</label>
+      <div class="input-box">
+        <input id="food" type="number" min="0" value="40000">
+        <span class="yen">円</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="utility">水道・光熱費</label>
+      <div class="input-box">
+        <input id="utility" type="number" min="0" value="15000">
+        <span class="yen">円</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="internet">スマホ・インターネット</label>
+      <div class="input-box">
+        <input id="internet" type="number" min="0" value="10000">
+        <span class="yen">円</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="transport">交通費</label>
+      <div class="input-box">
+        <input id="transport" type="number" min="0" value="10000">
+        <span class="yen">円</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="insurance">保険</label>
+      <div class="input-box">
+        <input id="insurance" type="number" min="0" value="5000">
+        <span class="yen">円</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="entertainment">娯楽・交際費</label>
+      <div class="input-box">
+        <input id="entertainment" type="number" min="0" value="30000">
+        <span class="yen">円</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="other">その他</label>
+      <div class="input-box">
+        <input id="other" type="number" min="0" value="20000">
+        <span class="yen">円</span>
+      </div>
+    </div>
+
+    <button class="calculate-button" onclick="calculate()">
+      💰 シミュレーションする
+    </button>
+
+  </section>
+
+  <section class="card result" id="result">
+
+    <h2>③ シミュレーション結果</h2>
+
+    <div class="result-main">
+      <div class="label">毎月の生活費</div>
+      <div class="number" id="monthlyExpense">0円</div>
+    </div>
+
+    <div class="result-grid">
+
+      <div class="result-box">
+        <div class="title">毎月に残るお金</div>
+        <div class="value" id="monthlyRemaining">0円</div>
+      </div>
+
+      <div class="result-box">
+        <div class="title">年間生活費</div>
+        <div class="value" id="yearlyExpense">0円</div>
+      </div>
+
+      <div class="result-box">
+        <div class="title">年間で貯められる金額</div>
+        <div class="value" id="yearlySaving">0円</div>
+      </div>
+
+      <div class="result-box">
+        <div class="title">家賃負担率</div>
+        <div class="value" id="rentRate">0%</div>
+      </div>
+
+    </div>
+
+    <div class="judgment" id="judgment">
+      判定結果がここに表示されます。
+    </div>
+
+    <div class="note">
+      ※このシミュレーションは入力された金額をもとにした目安です。
+      実際の生活費は地域・季節・生活スタイルなどによって異なります。
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 人生の出費・生活判断シミュレーター
+</footer>
+
+<script>
+  function getValue(id) {
+    const value = Number(document.getElementById(id).value);
+    return value >= 0 ? value : 0;
+  }
+
+  function formatYen(number) {
+    return Math.round(number).toLocaleString("ja-JP") + "円";
+  }
+
+  function calculate() {
+
+    const income = getValue("income");
+
+    const rent = getValue("rent");
+    const food = getValue("food");
+    const utility = getValue("utility");
+    const internet = getValue("internet");
+    const transport = getValue("transport");
+    const insurance = getValue("insurance");
+    const entertainment = getValue("entertainment");
+    const other = getValue("other");
+
+    const monthlyExpense =
+      rent +
+      food +
+      utility +
+      internet +
+      transport +
+      insurance +
+      entertainment +
+      other;
+
+    const monthlyRemaining = income - monthlyExpense;
+
+    const yearlyExpense = monthlyExpense * 12;
+
+    const yearlySaving = monthlyRemaining * 12;
+
+    let rentRate = 0;
+
+    if (income > 0) {
+      rentRate = (rent / income) * 100;
+    }
+
+    document.getElementById("monthlyExpense").textContent =
+      formatYen(monthlyExpense);
+
+    document.getElementById("monthlyRemaining").textContent =
+      formatYen(monthlyRemaining);
+
+    document.getElementById("yearlyExpense").textContent =
+      formatYen(yearlyExpense);
+
+    document.getElementById("yearlySaving").textContent =
+      formatYen(yearlySaving);
+
+    document.getElementById("rentRate").textContent =
+      rentRate.toFixed(1) + "%";
+
+    const judgment = document.getElementById("judgment");
+
+    if (income <= 0) {
+
+      judgment.innerHTML =
+        "<strong>⚠️ 手取りを入力してください</strong><br>" +
+        "毎月の手取りを入力すると、生活費を計算できます。";
+
+    } else if (monthlyRemaining < 0) {
+
+      judgment.innerHTML =
+        "<strong>⚠️ 支出が収入を上回っています</strong><br>" +
+        "現在の入力条件では、毎月 " +
+        formatYen(Math.abs(monthlyRemaining)) +
+        " 不足する計算です。";
+
+    } else if (rentRate > 35) {
+
+      judgment.innerHTML =
+        "<strong>🏠 家賃負担が大きめです</strong><br>" +
+        "家賃は手取りの " +
+        rentRate.toFixed(1) +
+        "% です。家賃以外の生活費も考えて、無理のない予算か確認しましょう。";
+
+    } else if (rentRate > 30) {
+
+      judgment.innerHTML =
+        "<strong>🏠 家賃はやや高めです</strong><br>" +
+        "家賃は手取りの " +
+        rentRate.toFixed(1) +
+        "% です。生活費や貯金額とのバランスを確認してみましょう。";
+
+    } else {
+
+      judgment.innerHTML =
+        "<strong>👍 比較的バランスの取れた家賃です</strong><br>" +
+        "家賃は手取りの " +
+        rentRate.toFixed(1) +
+        "% です。残りのお金から貯金やその他の支出も考えてみましょう。";
+    }
+
+    document.getElementById("result").classList.add("show");
+
+    document.getElementById("result").scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+</script>
 
 </body>
 </html>
